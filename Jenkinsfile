@@ -12,6 +12,9 @@ pipeline {
             steps {
                 // A 폴더로 이동하여 빌드 실행
                 dir('BootTodoExample') {
+                    // gradlew에 실행 권한 부여
+                    sh 'chmod +x ./gradlew'
+                    // 빌드 실행
                     sh './gradlew build'
                 }
             }
