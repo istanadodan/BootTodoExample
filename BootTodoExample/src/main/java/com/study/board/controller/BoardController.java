@@ -35,6 +35,7 @@ public class BoardController {
 		output.add("data4");
 		output.add("data5");
 		output.add("data6");
+		output.add("data7");
 		return output;
 	}
 	
