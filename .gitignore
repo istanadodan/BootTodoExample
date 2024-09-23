@@ -1,3 +1,11 @@
+**/docker/
+**/build/
+**/node_modules/
+/.metadata/
+
+.dockerignore
+.gitignore
+
 # Compiled class file
 *.class
 

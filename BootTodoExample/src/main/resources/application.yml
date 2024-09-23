@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://database:3306/mydb?serverTimezone=UTC&characterEncoding=utf8
+    username: root
+    password: verysecret
+  application:
+    name: BootTodoExample
+#mybatis:
+#  type-aliases-package: com.study.board.dto
+#  configuration:
+#    map-underscore-to-camel-case: true
+#  mapper-locations: classpath:mapper/*.xml
+logging:
+  level:
+    org.mybatis: TRACE
+    com.study.board.dao: DEBUG
