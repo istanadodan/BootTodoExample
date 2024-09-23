@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    tools {
+        gradle 'gradle_8.10.2'
+    }
     stages {
         stage('Checkout') {
             steps {
