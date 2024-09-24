@@ -47,6 +47,7 @@ pipeline {
                                     def customImage = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
                                     // docker hub에 등록
                                     customImage.push()
+                                    
                                 }
 
                                 // // Docker 로그인
