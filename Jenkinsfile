@@ -4,6 +4,7 @@ pipeline {
         DOCKER_IMAGE="docker0now/docker_server"
         DOCKER_REGISTRY="index.docker.io/v1/"
         DOCKER_CREDENTIALS=credentials("docker_jenkins")
+        
     }
     tools {
         gradle 'gradle_8.10.2'
