@@ -3,8 +3,8 @@ pipeline {
     environment {
         DOCKER_IMAGE="docker0now/docker_server"
         DOCKER_REGISTRY="index.docker.io/v1/"
-        DOCKER_CREDENTIALS=credentials("docker_jenkins")
-        
+        // DOCKER_CREDENTIALS=credentials("9ce2f237-582b-4464-90a6-e9ba2cf9256d")
+        DOCKER_CREDENTIALS="9ce2f237-582b-4464-90a6-e9ba2cf9256d"
     }
     tools {
         gradle 'gradle_8.10.2'
