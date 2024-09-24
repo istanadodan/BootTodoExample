@@ -35,19 +35,24 @@ pipeline {
             }
         }
         stage('Deploy') {
-            steps {
-                dir('BootTodoExample') {
-                    script {
-                        try {
-                            // Dockerfile을 사용하여 Docker 이미지 빌드
-                            def customImage = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
-                            
-                            // Docker Hub에 이미지 푸시
-                            docker.withRegistry("https://${DOCKER_REGISTRY}", DOCKER_CREDENTIALS) {
-                                customImage.push()
+                steps {
+                    dir('BootTodoExample') {
+                        script {
+                            try {
+                                // Docker 로그인
+                                sh "echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin"
+
+                                // Docker 이미지 빌드
+                                sh "docker build -t ${DOCKER_IMAGE} -f ./docker/Dockerfile_app ."
+
+                                // Docker 이미지 푸시
+                                sh "docker push ${DOCKER_IMAGE}"
+
+                                // Docker 로그아웃
+                                sh "docker logout"
+                            } catch (Exception e) {
+                                error "Docker build or push failed: ${e.message}"
                             }
-                        } catch (Exception e) {
-                            error(message: "Docker build or push failed: ${e.message}")
                         }
                     }
                 }
