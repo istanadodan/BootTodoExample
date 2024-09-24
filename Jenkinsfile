@@ -2,8 +2,8 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE="docker0now/docker_server"
-        DOCKER_REGISTRY="registry-1.docker.io/v2/"
-        DOCKER_CREDENTIALS=credentials('33f33074-e0b4-49f1-8400-7f965a551451')
+        DOCKER_REGISTRY="index.docker.io/v1/"
+        DOCKER_CREDENTIALS=credentials('9ce2f237-582b-4464-90a6-e9ba2cf9256d')
     }
     tools {
         gradle 'gradle_8.10.2'
@@ -39,12 +39,11 @@ pipeline {
                     dir('BootTodoExample') {
                         script {
                             try {
-
-                                // Dockerfile을 사용하여 Docker 이미지 빌드
-                                def customImage = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
-                                
                                 // Docker Hub에 이미지 푸시
                                 docker.withRegistry("https://${DOCKER_REGISTRY}", DOCKER_CREDENTIALS) {
+                                    // Dockerfile을 사용하여 Docker 이미지 빌드
+                                    def customImage = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
+                                    // docker hub에 등록
                                     customImage.push()
                                 }
 
