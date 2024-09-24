@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_IMAGE="docker0now/docker_server"
         DOCKER_REGISTRY="index.docker.io/v1/"
-        DOCKER_CREDENTIALS=credentials('9ce2f237-582b-4464-90a6-e9ba2cf9256d')
+        DOCKER_CREDENTIALS=credentials("docker_jenkins")
     }
     tools {
         gradle 'gradle_8.10.2'
@@ -47,7 +47,7 @@ pipeline {
                                     def customImage = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
                                     // docker hub에 등록
                                     customImage.push()
-                                    
+
                                 }
 
                                 // // Docker 로그인
