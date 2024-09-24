@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_IMAGE="docker_server"
         DOCKER_REGISTRY="registry.hub.docker.com"
-        DOCKER_CREDENTIALS=credentials('docker-hub-credentials')
+        DOCKER_CREDENTIALS=credentials('github_jenkins_01')
     }
     tools {
         gradle 'gradle_8.10.2'
