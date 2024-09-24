@@ -1,9 +1,9 @@
 pipeline {
     agent any
     environment {
-        DOCKER_IMAGE="docker_server"
+        DOCKER_IMAGE="docker0now/docker_server"
         DOCKER_REGISTRY="registry.hub.docker.com"
-        DOCKER_CREDENTIALS=credentials('github_jenkins_01')
+        DOCKER_CREDENTIALS=credentials('33f33074-e0b4-49f1-8400-7f965a551451')
     }
     tools {
         gradle 'gradle_8.10.2'
