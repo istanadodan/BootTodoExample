@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE="docker0now/docker_server"
-        DOCKER_REGISTRY="https://registry-1.docker.io/v2/"
+        DOCKER_REGISTRY="registry-1.docker.io/v2/"
         DOCKER_CREDENTIALS=credentials('33f33074-e0b4-49f1-8400-7f965a551451')
     }
     tools {
@@ -39,18 +39,27 @@ pipeline {
                     dir('BootTodoExample') {
                         script {
                             try {
-                                // Docker 로그인
-                                sh "echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin"
-                                sh "docker info"
 
-                                // Docker 이미지 빌드
-                                sh "docker build -t ${DOCKER_IMAGE} -f ./docker/Dockerfile_app ."
+                                // Dockerfile을 사용하여 Docker 이미지 빌드
+                                def customImage = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
+                                
+                                // Docker Hub에 이미지 푸시
+                                docker.withRegistry("https://${DOCKER_REGISTRY}", DOCKER_CREDENTIALS) {
+                                    customImage.push()
+                                }
 
-                                // Docker 이미지 푸시
-                                sh "docker push ${DOCKER_IMAGE}"
+                                // // Docker 로그인
+                                // sh "echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin"
+                                // sh "docker info"
 
-                                // Docker 로그아웃
-                                sh "docker logout"
+                                // // Docker 이미지 빌드
+                                // sh "docker build -t ${DOCKER_IMAGE} -f ./docker/Dockerfile_app ."
+
+                                // // Docker 이미지 푸시
+                                // sh "docker push ${DOCKER_IMAGE}"
+
+                                // // Docker 로그아웃
+                                // sh "docker logout"
                             } catch (Exception e) {
                                 error "Docker build or push failed: ${e.message}"
                             }
