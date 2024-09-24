@@ -1,0 +1,17 @@
+services:
+    react:
+        image: react
+        build:
+            context: ..
+            dockerfile: ./docker/Dockerfile
+            
+        container_name: frontend-react
+        ports:
+            - "3000:80"
+        # volumes:
+            # - "..:/app"
+        networks:
+            - mynetwork
+networks:
+    mynetwork:
+        # external: true

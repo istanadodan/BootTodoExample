@@ -1,0 +1,42 @@
+services:
+  mysql:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile_db
+    container_name: mysql-db
+    environment:
+      - 'MYSQL_DATABASE=mydb'
+      - 'MYSQL_PASSWORD=secret'
+      - 'MYSQL_ROOT_PASSWORD=verysecret'
+      - 'MYSQL_USER=myuser'
+    ports:
+      - '3306:3306'
+    networks:
+      - mynetwork
+
+  server:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile_app
+    container_name: tomcat-c
+    ports:
+      - "8080:8080"
+    volumes:
+      - 'D:\works\BootTodoExample\build\libs:/tmp/libs'
+    depends_on:
+      - mysql
+    networks:
+      - mynetwork
+
+volumes:
+  mysql-data:
+    name: my_named_volume
+    driver: local
+    driver_opts:
+      type: none
+      device: D:/.data/db/data
+      o: bind
+
+networks:
+  mynetwork:
+     name: mynetwork

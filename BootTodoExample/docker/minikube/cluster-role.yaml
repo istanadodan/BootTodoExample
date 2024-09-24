@@ -1,0 +1,26 @@
+#kubectl create serviceaccount api-service-account -n account
+#kubectl create token api-service-account -n account
+
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: api-cluster-role
+  namespace: account
+rules:
+- apiGroups: [""]
+  resources: ["services", "endpointslices", "pods"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: api-cluster-role-binding
+  namespace: account
+subjects:
+- kind: ServiceAccount
+  name: api-service-account
+  namespace: account
+roleRef:
+  kind: ClusterRole
+  name: api-cluster-role
+  apiGroup: rbac.authorization.k8s.io

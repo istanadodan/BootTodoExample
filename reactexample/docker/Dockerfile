@@ -1,0 +1,16 @@
+# Ngnix를 사용하여 애플리케이션 제공
+FROM nginx:alpine
+
+# 네트워크 도구
+# RUN apt update && apt -y install iputils-ping
+
+# 빌드된 파일들을 Ngnix 기본 경로로 복사
+COPY ./build /usr/share/nginx/html
+
+# Nginx 설정 파일 복사 (필요한 경우)
+# COPY nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 80
+
+# 실행명령
+CMD ["nginx", "-g", "daemon off;"]

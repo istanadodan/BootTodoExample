@@ -1,0 +1,28 @@
+FROM tomcat:latest
+
+ARG TOMCAT_ROOT=/usr/local/tomcat/
+ARG WEBAPPS_ROOT=${TOMCAT_ROOT}/webapps
+ARG WAR_FILE2=BootTodoExample.war
+ARG watch_sh=watch_warfile.sh
+
+#감시 스크립트 복사
+# COPY ./$watch_sh ${TOMCAT_ROOT}
+# COPY ./entrypoint.sh /
+
+# RUN chmod +x $TOMCAT_ROOT/$watch_sh && chmod +x /entrypoint.sh
+
+# 새로운 react 폴더를 생성하고 build 폴더 복사
+RUN mv ${WEBAPPS_ROOT}.dist ${WEBAPPS_ROOT} 
+
+COPY ./tomcat-users.xml ${TOMCAT_ROOT}/conf/
+COPY ./context.xml ${WEBAPPS_ROOT}/manager/META-INF/
+COPY ../build/libs/${WAR_FILE2} /tmp
+
+RUN mkdir -p ${WEBAPPS_ROOT}/demo && unzip /tmp/${WAR_FILE2} -d ${WEBAPPS_ROOT}/demo/
+
+# 실행
+# ENTRYPOINT ["/entrypoint.sh"]
+
+CMD ["catalina.sh", "run"]
+
+EXPOSE 8080

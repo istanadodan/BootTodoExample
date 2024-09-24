@@ -1,5 +1,10 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_IMAGE="docker_server"
+        DOCKER_REGISTRY="registry.hub.docker.com"
+        DOCKER_CREDENTIALS=credentials('docker-hub-credentials')
+    }
     tools {
         gradle 'gradle_8.10.2'
     }
@@ -31,8 +36,12 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                // 배포 작업 (예시)
-                echo 'Deploying to production...'
+                dir('BootTodoExample') {
+                    docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
+                    docker.withRegistry("https://${DOCKER_REGISTRY}", DOCKER_CREDENTIALS) {
+                        docker.image(DOCKER_IMAGE).push()
+                    }
+                }
             }
         }
     }

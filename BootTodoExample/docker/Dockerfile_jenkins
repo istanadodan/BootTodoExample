@@ -1,0 +1,35 @@
+# Jenkins LTS 이미지 기반
+FROM jenkins/jenkins:lts
+
+# root 권한을 사용하도록 설정
+USER root
+
+# APT 기본 설정
+RUN apt-get clean && \
+    apt-get update
+
+# 필수 패키지 설치 (JDK, Docker, Git)
+RUN apt-get update && apt-get install -y openjdk-17-jdk
+RUN apt-get install -y curl
+RUN apt-get install -y git
+RUN apt-get install -y docker.io
+
+# Node.js 및 npm 설치
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs
+
+# APT 캐시 정리
+RUN rm -rf /var/lib/apt/lists/*
+
+# docker 그룹에 jenkins 사용자 추가
+RUN usermod -aG docker jenkins
+
+# 작업 디렉토리 설정
+USER jenkins
+
+# Jenkins 시작
+ENTRYPOINT ["/usr/bin/tini", "--", "/usr/local/bin/jenkins.sh"]
+
+# 포트 설정
+EXPOSE 8080
+EXPOSE 50000

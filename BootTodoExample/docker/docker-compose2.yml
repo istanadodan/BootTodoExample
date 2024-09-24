@@ -1,0 +1,27 @@
+services:
+  jenkins:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile_jenkins
+    container_name: cicd_jenkins
+    # environment:
+    #   - 'MYSQL_DATABASE=mydb'
+    #   - 'MYSQL_PASSWORD=secret'
+    #   - 'MYSQL_ROOT_PASSWORD=verysecret'
+    #   - 'MYSQL_USER=myuser'
+    ports:
+      - '50000:50000'
+      - '8080:8080'
+
+volumes:
+  mysql-data:
+    name: my_named_volume
+    driver: local
+    driver_opts:
+      type: none
+      device: D:/.data/db/data
+      o: bind
+
+networks:
+  mynetwork:
+     name: mynetwork

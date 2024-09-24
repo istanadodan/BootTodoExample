@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      # serviceAccountName: api-service-account
+      # initContainers:
+      # - name: init-permissions
+      #   image: busybox
+      #   command: ['sh', '-c', 'chmod -R 755 /app && chmod -R 755 /app/node_modules/.bin']
+      #   volumeMounts:
+      #   - name: app-volume
+      #     mountPath: /app    
+      containers:
+      - name: frontend
+        image: docker.io/library/react:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: app-volume
+          mountPath: /usr/share/nginx/html
+        command: ['sh', '-c', 'nginx -g "daemon off;"']
+      volumes:
+      - name: app-volume
+        hostPath:
+          path: /mnt/app
+          type: DirectoryOrCreate
