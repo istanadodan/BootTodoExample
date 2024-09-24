@@ -39,6 +39,8 @@ pipeline {
                     dir('BootTodoExample') {
                         script {
                             try {
+                                // 확인용
+                                echo "Logging in to Docker Hub as ${DOCKER_CREDENTIALS_USR}"
                                 // Docker Hub에 이미지 푸시
                                 docker.withRegistry("https://${DOCKER_REGISTRY}", DOCKER_CREDENTIALS) {
                                     // Dockerfile을 사용하여 Docker 이미지 빌드
