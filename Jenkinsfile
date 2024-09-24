@@ -40,14 +40,14 @@ pipeline {
                         script {
                             try {
                                 // 확인용
-                                echo "Logging in to Docker Hub as ${DOCKER_CREDENTIALS_USR}"
+                                echo "Logging in to Docker Hub as usr: ${DOCKER_CREDENTIALS_USR}"
+                                echo "Logging in to Docker Hub as pw: ${DOCKER_CREDENTIALS_PSW}"
                                 // Docker Hub에 이미지 푸시
                                 docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                                     // Dockerfile을 사용하여 Docker 이미지 빌드
                                     def customImage = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
                                     // docker hub에 등록
                                     customImage.push()
-
                                 }
 
                                 // // Docker 로그인
