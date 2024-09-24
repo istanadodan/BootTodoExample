@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE="docker0now/docker_server"
-        DOCKER_REGISTRY="registry.hub.docker.com"
+        DOCKER_REGISTRY="https://registry-1.docker.io"
         DOCKER_CREDENTIALS=credentials('33f33074-e0b4-49f1-8400-7f965a551451')
     }
     tools {
@@ -41,6 +41,7 @@ pipeline {
                             try {
                                 // Docker 로그인
                                 sh "echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin"
+                                sh "docker info"
 
                                 // Docker 이미지 빌드
                                 sh "docker build -t ${DOCKER_IMAGE} -f ./docker/Dockerfile_app ."
