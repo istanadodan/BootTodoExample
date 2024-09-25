@@ -34,7 +34,6 @@ pipeline {
         //         }
         //     }
         // }
-        
         stage('create image') {
             steps {
                 script {
