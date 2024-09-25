@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKER_IMAGE="docker0now/docker_server"
         DOCKER_REGISTRY="https://index.docker.io/"
-        DOCKER_CREDENTIALS=credentials("9ce2f237-582b-4464-90a6-e9ba2cf9256d")
+        DOCKER_CREDENTIALS=credentials("1c39fa69-85d5-47a4-a6a6-5a15a65e13ee")
     }
     tools {
         gradle 'gradle_8.10.2'
