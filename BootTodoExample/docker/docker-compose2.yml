@@ -14,9 +14,7 @@ services:
       - '8080:8080'
     volumes:
       - //var/run/docker.sock:/var/run/docker.sock
-    command:
-      sh chmod 666 /var/run/docker.sock
-
+    
 volumes:
   mysql-data:
     name: my_named_volume

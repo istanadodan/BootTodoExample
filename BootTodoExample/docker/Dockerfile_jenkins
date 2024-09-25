@@ -34,6 +34,7 @@ RUN rm -rf /var/lib/apt/lists/*
 
 # docker 그룹에 jenkins 사용자 추가
 RUN groupadd docker && usermod -aG docker jenkins
+RUN chmod -R 777 /var/run/
 
 # 포트 설정
 EXPOSE 8080
