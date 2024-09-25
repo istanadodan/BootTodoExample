@@ -26,6 +26,8 @@ pipeline {
                 }
             }
         }
+
+        
         // stage('Test') {
         //     steps {
         //         // A 폴더에서 테스트 실행
@@ -34,7 +36,7 @@ pipeline {
         //         }
         //     }
         // }
-        
+
 
         stage('create image') {
             steps {
