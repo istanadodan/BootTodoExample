@@ -6,7 +6,7 @@ pipeline {
         DOCKER_CREDENTIALS=credentials("1c39fa69-85d5-47a4-a6a6-5a15a65e13ee")
     }
     tools {
-        gradle 'gradle_8.10.2'
+        gradle 'gradle-tools'
     }
     stages {
         stage('Checkout') {
