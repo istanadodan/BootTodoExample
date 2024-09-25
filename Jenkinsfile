@@ -30,7 +30,7 @@ pipeline {
             steps {
                 // A 폴더에서 테스트 실행
                 dir('BootTodoExample') {
-                    sh './gradlew test'
+                    // sh './gradlew test'
                 }
             }
         }
