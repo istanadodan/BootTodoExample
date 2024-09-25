@@ -57,7 +57,7 @@ pipeline {
                     script {
                         // try {
                             // Docker Hub에 이미지 푸시
-                            docker.withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
+                            docker.withDockerRegistry([url: DOCKER_REGISTRY, credentialsId: DOCKER_CREDENTIALS]) {
                             // docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                                 docker.withServer('unix:///var/run/docker.sock') {
                                 // 빌드
