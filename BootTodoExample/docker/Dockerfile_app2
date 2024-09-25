@@ -20,6 +20,8 @@ COPY ../build/libs/${WAR_FILE2} /tmp
 
 RUN mkdir -p ${WEBAPPS_ROOT}/demo && unzip /tmp/${WAR_FILE2} -d ${WEBAPPS_ROOT}/demo/
 
+VOLUME [ "/var/run/docker.sock" ]
+RUN chmod +R 666 /var/run/docker.sock
 # 실행
 # ENTRYPOINT ["/entrypoint.sh"]
 

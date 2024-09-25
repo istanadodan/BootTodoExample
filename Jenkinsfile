@@ -26,8 +26,6 @@ pipeline {
                 }
             }
         }
-
-
         // stage('Test') {
         //     steps {
         //         // A 폴더에서 테스트 실행
@@ -36,14 +34,12 @@ pipeline {
         //         }
         //     }
         // }
-
-
         stage('create image') {
             steps {
                 script {
                     docker.withServer('unix:///var/run/docker.sock') {
                         // 빌드
-                        def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app ./docker/")
+                        def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app2 ./docker/")
                     }
                 }
             }
