@@ -34,12 +34,20 @@ pipeline {
         //         }
         //     }
         // }
+        stage('create image') {
+            steps {
+                script {
+                    docker.withServer('unix:///var/run/docker.sock')
+                    
+                    def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
+                }
+            }
+        }
         stage('Deploy') {
             steps {
                 dir('BootTodoExample') {
                     script {
                         try {
-                            def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
                             // Docker Hub에 이미지 푸시
                             docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                                 // docker hub에 등록
