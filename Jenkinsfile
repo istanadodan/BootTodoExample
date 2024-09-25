@@ -34,16 +34,16 @@ pipeline {
         //         }
         //     }
         // }
-        stage('create image') {
-            steps {
-                script {
-                    docker.withServer('unix:///var/run/docker.sock') {
-                        // 빌드
-                        def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app2 ./docker/")
-                    }
-                }
-            }
-        }
+        // stage('create image') {
+        //     steps {
+        //         script {
+        //             docker.withServer('unix:///var/run/docker.sock') {
+        //                 // 빌드
+        //                 def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app2 ./docker/")
+        //             }
+        //         }
+        //     }
+        // }
         stage('Deploy') {
             steps {
                 dir('BootTodoExample') {
@@ -51,7 +51,11 @@ pipeline {
                         try {
                             // Docker Hub에 이미지 푸시
                             docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
-                                // docker hub에 등록
+                                docker.withServer('unix:///var/run/docker.sock') {
+                                // 빌드
+                                    def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app2 ./docker/")
+                                }
+                                    // docker hub에 등록
                                 app.push()
                             }
 
