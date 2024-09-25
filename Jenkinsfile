@@ -1,5 +1,12 @@
 pipeline {
-    agent any
+    agent {
+       docker { 
+                 image "docker0now/docker_server"
+                 registryUrl 'https://registry-1.docker.io/'
+                 registryCredentialsId "docker-credential"
+                 reuseNode true
+               }
+    }
     environment {
         DOCKER_IMAGE="docker0now/docker_server"
         DOCKER_REGISTRY="https://registry-1.docker.io/"
@@ -50,7 +57,8 @@ pipeline {
                     script {
                         // try {
                             // Docker Hub에 이미지 푸시
-                            docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
+                            docker.withDockerRegistry(credentialsId: 'docker', toolName: 'docker') {
+                            // docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                                 docker.withServer('unix:///var/run/docker.sock') {
                                 // 빌드
                                     def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app2 ./docker/")
