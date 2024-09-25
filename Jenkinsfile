@@ -57,7 +57,7 @@ pipeline {
                             // sh "docker push ${DOCKER_IMAGE}"
 
                             // // Docker 로그아웃
-                            sh "docker logout"
+                            // sh "docker logout"
                         } catch (Exception e) {
                             error "Docker build or push failed: ${e.message}"
                         }
