@@ -6,7 +6,7 @@ pipeline {
         DOCKER_CREDENTIALS=credentials("docker-credential")
     }
     tools {
-        gradle 'gradle-tools'
+        gradle 'gradle'
     }
     stages {
         stage('Checkout') {
