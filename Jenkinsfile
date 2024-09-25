@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE="docker0now/docker_server"
-        DOCKER_REGISTRY="https://index.docker.io/"
+        DOCKER_REGISTRY="https://registry.hub.docker.com"
         DOCKER_CREDENTIALS=credentials("1c39fa69-85d5-47a4-a6a6-5a15a65e13ee")
     }
     tools {
@@ -26,48 +26,49 @@ pipeline {
                 }
             }
         }
-        stage('Test') {
-            steps {
-                // A 폴더에서 테스트 실행
-                dir('BootTodoExample') {
-                    // sh './gradlew test'
+        // stage('Test') {
+        //     steps {
+        //         // A 폴더에서 테스트 실행
+        //         dir('BootTodoExample') {
+        //             // s?h './gradlew test'
+        //         }
+        //     }
+        // }
+        stage('build image') {
+            dir('BootTodoExample') {
+                script {
+                    // Dockerfile을 사용하여 Docker 이미지 빌드
+                    def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
                 }
             }
         }
         stage('Deploy') {
-                steps {
-                    dir('BootTodoExample') {
-                        script {
-                            try {
-                                // 확인용
-                                echo "Logging in to Docker Hub as usr: ${DOCKER_CREDENTIALS_USR}"
-                                echo "Logging in to Docker Hub as pw: ${DOCKER_CREDENTIALS_PSW}"
-                                // Docker Hub에 이미지 푸시
-                                docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
-                                    // Dockerfile을 사용하여 Docker 이미지 빌드
-                                    def customImage = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
-                                    // docker hub에 등록
-                                    customImage.push()
-                                }
-
-                                // // Docker 로그인
-                                // sh "echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin"
-                                // sh "docker info"
-
-                                // // Docker 이미지 빌드
-                                // sh "docker build -t ${DOCKER_IMAGE} -f ./docker/Dockerfile_app ."
-
-                                // // Docker 이미지 푸시
-                                // sh "docker push ${DOCKER_IMAGE}"
-
-                                // // Docker 로그아웃
-                                // sh "docker logout"
-                            } catch (Exception e) {
-                                error "Docker build or push failed: ${e.message}"
-                            }
+            steps {
+                script {
+                    try {
+                        // Docker Hub에 이미지 푸시
+                        docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
+                            // docker hub에 등록
+                            app.push()
                         }
+
+                        // // Docker 로그인
+                        // sh "echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin"
+                        // sh "docker info"
+
+                        // // Docker 이미지 빌드
+                        // sh "docker build -t ${DOCKER_IMAGE} -f ./docker/Dockerfile_app ."
+
+                        // // Docker 이미지 푸시
+                        // sh "docker push ${DOCKER_IMAGE}"
+
+                        // // Docker 로그아웃
+                        // sh "docker logout"
+                    } catch (Exception e) {
+                        error "Docker build or push failed: ${e.message}"
                     }
                 }
+            }
         }
     }
     post {
