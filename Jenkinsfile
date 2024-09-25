@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE="docker0now/docker_server"
-        DOCKER_REGISTRY="https://registry.hub.docker.com"
+        DOCKER_REGISTRY="https://registry-1.docker.io/"
         DOCKER_CREDENTIALS=credentials("1c39fa69-85d5-47a4-a6a6-5a15a65e13ee")
     }
     tools {
@@ -57,7 +57,7 @@ pipeline {
                             // sh "docker push ${DOCKER_IMAGE}"
 
                             // // Docker 로그아웃
-                            // sh "docker logout"
+                            sh "docker logout"
                         } catch (Exception e) {
                             error "Docker build or push failed: ${e.message}"
                         }
