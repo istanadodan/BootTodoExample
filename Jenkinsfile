@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_IMAGE="docker0now/docker_server"
-        DOCKER_REGISTRY="https://index.docker.io/v1/"
+        DOCKER_REGISTRY="https://index.docker.io/"
         DOCKER_CREDENTIALS=credentials("9ce2f237-582b-4464-90a6-e9ba2cf9256d")
     }
     tools {
