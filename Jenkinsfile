@@ -58,8 +58,7 @@ pipeline {
                     script {
                         // try {
                             // Docker Hub에 이미지 푸시
-                            docker.withDockerRegistry([url: DOCKER_REGISTRY, credentialsId: DOCKER_CREDENTIALS]) {
-                            // docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
+                            docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                                 docker.withServer('unix:///var/run/docker.sock') {
                                 // 빌드
                                     def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app2 ./docker/")
