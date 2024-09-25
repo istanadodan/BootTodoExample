@@ -48,7 +48,7 @@ pipeline {
             steps {
                 dir('BootTodoExample') {
                     script {
-                        try {
+                        // try {
                             // Docker Hub에 이미지 푸시
                             docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                                 docker.withServer('unix:///var/run/docker.sock') {
@@ -71,9 +71,9 @@ pipeline {
 
                             // // Docker 로그아웃
                             // sh "docker logout"
-                        } catch (Exception e) {
-                            error "Docker build or push failed: ${e.message}"
-                        }
+                        // } catch (Exception e) {
+                        //     error "Docker build or push failed: ${e.message}"
+                        // }
                     }
                 }
             }
