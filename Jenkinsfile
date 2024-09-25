@@ -37,7 +37,7 @@ pipeline {
         stage('create image') {
             steps {
                 script {
-                    docker.withServer("unix:///var/run/docker.sock")
+                    docker.withServer('unix:///var/run/docker.sock')
                     // 빌드
                     def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
                 }
