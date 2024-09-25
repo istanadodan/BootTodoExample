@@ -35,10 +35,12 @@ pipeline {
         //     }
         // }
         stage('build image') {
-            dir('BootTodoExample') {
-                script {
-                    // Dockerfile을 사용하여 Docker 이미지 빌드
-                    def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
+            steps {
+                dir('BootTodoExample') {
+                    script {
+                        // Dockerfile을 사용하여 Docker 이미지 빌드
+                        def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app .")
+                    }
                 }
             }
         }
