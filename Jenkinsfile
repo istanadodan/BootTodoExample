@@ -7,7 +7,7 @@ pipeline {
                  reuseNode true
                }
     }
-    agent any
+    // agent any
     environment {
         DOCKER_IMAGE = 'docker0now/docker_server'
         DOCKER_REGISTRY = 'https://registry-1.docker.io/'
