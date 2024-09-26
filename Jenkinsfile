@@ -1,6 +1,5 @@
 pipeline {
     // agent {
-    //     label 'docker'
     //    docker {
     //              image "docker0now/docker_server"
     //              registryUrl 'https://registry-1.docker.io/'
