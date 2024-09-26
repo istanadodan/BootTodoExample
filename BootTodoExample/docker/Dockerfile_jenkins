@@ -26,8 +26,8 @@ RUN apt-get update && \
     apt-get -y install docker-ce-cli
 
 # Node.js 및 npm 설치
-RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
-    apt-get install -y nodejs
+# RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+#     apt-get install -y nodejs
 
 # APT 캐시 정리
 RUN rm -rf /var/lib/apt/lists/*

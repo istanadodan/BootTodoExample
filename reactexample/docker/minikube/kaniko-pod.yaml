@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kaniko
+  namespace: kaniko
+spec:
+  containers:
+  - name: kaniko
+    image: gcr.io/kaniko-project/executor:debug
+    args:
+    - --dockerfile=Dockerfile
+    - --context=git://github.com/akfmdl/kaniko-tutorial.git#refs/heads/main
+    - --destination=docker0now/kaniko:v1
+    - --context-sub-path=.
+    volumeMounts:
+    - name: kaniko-secret
+      mountPath: /kaniko/.docker/
+  volumes:
+  - name: kaniko-secret
+    secret:
+      secretName: docker-registry-secret
+      items:
+        - key: .dockerconfigjson
+          path: config.json

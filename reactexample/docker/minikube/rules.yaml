@@ -1,0 +1,42 @@
+# apiVersion: networking.istio.io/v1alpha3
+# kind: DestinationRule
+# metadata:
+#   name: mysql-client
+# spec:
+#   host: database
+#   trafficPolicy:
+#     tls:
+#       mode: ISTIO_MUTUAL
+#     portLevelSettings:
+#     - port:
+#         number: 3306
+#       tls:
+#         mode: DISABLE
+# ---
+# apiVersion: security.istio.io/v1beta1
+# kind: PeerAuthentication
+# metadata:
+#   name: default
+#   namespace: istio-system
+# spec:
+#   mtls:
+#     mode: PERMISSIVE
+# ---
+# apiVersion: networking.k8s.io/v1
+# kind: NetworkPolicy
+# metadata:
+#   name: mysql-network-policy
+#   namespace: default
+# spec:
+#   podSelector:
+#     matchLabels:
+#       app: mysql
+#   policyTypes:
+#   - Ingress
+#   ingress:
+#   - from:
+#     - ipBlock:
+#         cidr: 0.0.0.0/0
+#     ports:
+#     - protocol: TCP
+#       port: 3306

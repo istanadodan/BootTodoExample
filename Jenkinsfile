@@ -1,12 +1,12 @@
 pipeline {
-    // agent {
-    //    docker {
-    //              image "docker0now/docker_server"
-    //              registryUrl 'https://registry-1.docker.io/'
-    //              registryCredentialsId "docker-credential"
-    //              reuseNode true
-    //            }
-    // }
+    agent {
+       docker {
+                 image "docker0now/docker_server"
+                 registryUrl 'https://registry-1.docker.io/'
+                 registryCredentialsId "docker-credential"
+                 reuseNode true
+               }
+    }
     agent any
     environment {
         DOCKER_IMAGE = 'docker0now/docker_server'
@@ -49,12 +49,12 @@ pipeline {
                         // try {
                         // Docker Hub에 이미지 푸시
                         docker.withServer('unix:///var/run/docker.sock') {
-                            docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
+                            // docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                                 // 빌드
                                 def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile_app2 ./docker/')
                                 // docker hub에 등록
                                 app.push()
-                            }
+                            // }
                         }
 
                             // // Docker 로그인

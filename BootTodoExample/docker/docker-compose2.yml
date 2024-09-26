@@ -1,29 +1,26 @@
+version: '1.0'
+
 services:
   jenkins:
     build:
-      context: ..
-      dockerfile: ./docker/Dockerfile_jenkins
-    container_name: cicd_jenkins
-    # environment:
-    #   - 'MYSQL_DATABASE=mydb'
-    #   - 'MYSQL_PASSWORD=secret'
-    #   - 'MYSQL_ROOT_PASSWORD=verysecret'
-    #   - 'MYSQL_USER=myuser'
+      context: .
+      dockerfile: ./Dockerfile_jenkins
+    container_name: jenkins
+    environment:
+      - DOCKER_HOST=tcp://docker:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
     ports:
       - '50000:50000'
       - '8080:8080'
     volumes:
-      - //var/run/docker.sock:/var/run/docker.sock
-    
+      - //var/run/docker.sock:/var/run/docker.sock:ro
+      - jenkins_home:/var/jenkins_home:rw
+
 volumes:
-  mysql-data:
-    name: my_named_volume
+  jenkins_home:
     driver: local
     driver_opts:
       type: none
-      device: D:/.data/db/data
-      o: bind
-
-networks:
-  mynetwork:
-     name: mynetwork
+      device: D:\.data\jenkins
+      o: bind,rw
