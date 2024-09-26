@@ -1,6 +1,6 @@
 pipeline {
     // agent {
-    //    docker { 
+    //    docker {
     //              image "docker0now/docker_server"
     //              registryUrl 'https://registry-1.docker.io/'
     //              registryCredentialsId "docker-credential"
@@ -9,9 +9,9 @@ pipeline {
     // }
     agent any
     environment {
-        DOCKER_IMAGE="docker0now/docker_server"
-        DOCKER_REGISTRY="https://registry-1.docker.io/V1/"
-        DOCKER_CREDENTIALS=credentials("docker-credential")
+        DOCKER_IMAGE = 'docker0now/docker_server'
+        DOCKER_REGISTRY = 'https://registry-1.docker.io/'
+        DOCKER_CREDENTIALS = credentials('docker-credential')
     }
     tools {
         gradle 'gradle-tools'
@@ -30,7 +30,7 @@ pipeline {
                     // gradlew에 실행 권한 부여
                     sh 'chmod +x ./gradlew'
                     // 빌드 실행
-                    sh './gradlew build'
+                    sh './gradlew build --warning-mode=all'
                 }
             }
         }
@@ -42,30 +42,20 @@ pipeline {
         //         }
         //     }
         // }
-        // stage('create image') {
-        //     steps {
-        //         script {
-        //             docker.withServer('unix:///var/run/docker.sock') {
-        //                 // 빌드
-        //                 def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app2 ./docker/")
-        //             }
-        //         }
-        //     }
-        // }
         stage('Deploy') {
             steps {
                 dir('BootTodoExample') {
                     script {
                         // try {
-                            // Docker Hub에 이미지 푸시
+                        // Docker Hub에 이미지 푸시
+                        docker.withServer('unix:///var/run/docker.sock') {
                             docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
-                                docker.withServer('unix:///var/run/docker.sock') {
                                 // 빌드
-                                    def app = docker.build(DOCKER_IMAGE, "-f ./docker/Dockerfile_app2 ./docker/")
-                                }
-                                    // docker hub에 등록
+                                def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile_app2 ./docker/')
+                                // docker hub에 등록
                                 app.push()
                             }
+                        }
 
                             // // Docker 로그인
                             // sh "echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin"
@@ -77,11 +67,11 @@ pipeline {
                             // // Docker 이미지 푸시
                             // sh "docker push ${DOCKER_IMAGE}"
 
-                            // // Docker 로그아웃
-                            // sh "docker logout"
-                        // } catch (Exception e) {
-                        //     error "Docker build or push failed: ${e.message}"
-                        // }
+                    // // Docker 로그아웃
+                    // sh "docker logout"
+                    // } catch (Exception e) {
+                    //     error "Docker build or push failed: ${e.message}"
+                    // }
                     }
                 }
             }
