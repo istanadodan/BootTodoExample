@@ -1,16 +1,16 @@
 pipeline {
-    agent {
-       docker { 
-                 image "docker0now/docker_server"
-                 registryUrl 'https://registry-1.docker.io/'
-                 registryCredentialsId "docker-credential"
-                 reuseNode true
-               }
-    }
-    // agent any
+    // agent {
+    //    docker { 
+    //              image "docker0now/docker_server"
+    //              registryUrl 'https://registry-1.docker.io/'
+    //              registryCredentialsId "docker-credential"
+    //              reuseNode true
+    //            }
+    // }
+    agent any
     environment {
         DOCKER_IMAGE="docker0now/docker_server"
-        DOCKER_REGISTRY="https://registry-1.docker.io/"
+        DOCKER_REGISTRY="https://registry-1.docker.io/V1/"
         DOCKER_CREDENTIALS=credentials("docker-credential")
     }
     tools {
