@@ -11,7 +11,7 @@ pipeline {
     environment {
         DOCKER_IMAGE = 'docker0now/docker_server'
         DOCKER_REGISTRY = 'https://registry-1.docker.io/'
-        DOCKER_CREDENTIALS = credentials('docker-credential')
+        DOCKER_CREDENTIALS = 'docker-credential'
     }
     tools {
         gradle 'gradle-tools'
@@ -49,8 +49,7 @@ pipeline {
                         // try {
                         // Docker Hub에 이미지 푸시
                         docker.withServer('unix:///var/run/docker.sock') {
-                            sh "echo withServer: $DOCKER_REGISTRY: $DOCKER_CREDENTIALS"
-                            docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
+                            docker.withRegistry(DOCKER_REGISTRY, credentials(DOCKER_CREDENTIALS)) {
                                 // 빌드
                                 def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile_app2 ./docker/')
                                 // docker hub에 등록
