@@ -49,7 +49,7 @@ pipeline {
                         // try {
                         // Docker Hub에 이미지 푸시
                         docker.withServer('unix:///var/run/docker.sock') {
-                            sh "echo withServer: $DOCKER_REGISTRY: $DOCKER_CRENDTIALS"
+                            sh "echo withServer: $DOCKER_REGISTRY: $DOCKER_CREDENTIALS"
                             docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                                 // 빌드
                                 def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile_app2 ./docker/')
