@@ -52,24 +52,11 @@ pipeline {
                             // docker.withRegistry(DOCKER_REGISTRY, credentials(DOCKER_CREDENTIALS)) {
                             docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                                 // 빌드
-                                def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile_app2 ./docker/')
+                                def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile_app2 .')
                                 // docker hub에 등록
                                 app.push()
                             }
                         }
-
-                            // // Docker 로그인
-                            // sh "echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin"
-                            // sh "docker info"
-
-                            // // Docker 이미지 빌드
-                            // sh "docker build -t ${DOCKER_IMAGE} -f ./docker/Dockerfile_app ."
-
-                            // // Docker 이미지 푸시
-                            // sh "docker push ${DOCKER_IMAGE}"
-
-                    // // Docker 로그아웃
-                    // sh "docker logout"
                     // } catch (Exception e) {
                     //     error "Docker build or push failed: ${e.message}"
                     // }
