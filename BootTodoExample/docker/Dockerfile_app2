@@ -5,6 +5,8 @@ ARG WEBAPPS_ROOT=${TOMCAT_ROOT}/webapps
 ARG WAR_FILE2=BootTodoExample.war
 ARG watch_sh=watch_warfile.sh
 
+RUN apt-get update && apt-get install -y unzip
+
 #감시 스크립트 복사
 # COPY ./$watch_sh ${TOMCAT_ROOT}
 # COPY ./entrypoint.sh /
