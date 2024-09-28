@@ -44,7 +44,7 @@ pipeline {
         // }
         stage('Deploy') {
             steps {
-                // dir('BootTodoExample') {
+                dir('BootTodoExample') {
                     script {
                         // try {
                         // Docker Hub에 이미지 푸시
@@ -74,7 +74,7 @@ pipeline {
                     //     error "Docker build or push failed: ${e.message}"
                     // }
                     }
-                // }
+                }
             }
         }
     }
