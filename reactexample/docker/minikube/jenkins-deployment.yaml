@@ -12,17 +12,15 @@ spec:
       labels:
         app: jenkins
     spec:
-      # securityContext:
-      #     fsGroup: 1000
       initContainers:
-      - name: init-chown-data
+      - name: init-chown-docker
         image: busybox
-        command: ['sh', '-c', 'chown 1001:1000 /var/run/docker.sock && chmod 660 /var/run/docker.sock']
+        command: ['sh', '-c', 'docker=$(getent group docker|cut -d: -f3 || echo 999) && chown root:$docker /var/run/docker.sock && chmod 660 /var/run/docker.sock']
         volumeMounts:
         - name: docker-sock
           mountPath: /var/run/docker.sock
         securityContext:
-          runAsUser: 0 # root
+          runAsGroup: 0
       # serviceAccountName: jenkins-admin
       containers:
         - name: jenkins

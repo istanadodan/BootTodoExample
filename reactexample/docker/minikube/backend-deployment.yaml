@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: tomcat-c
-        image: docker.io/library/docker-server:latest
+        # image: docker.io/library/docker-server:latest
+        image: docker0now/docker_server:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080
