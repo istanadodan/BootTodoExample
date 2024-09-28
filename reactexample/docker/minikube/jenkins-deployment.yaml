@@ -12,9 +12,17 @@ spec:
       labels:
         app: jenkins
     spec:
-      # **securityContext:
+      # securityContext:
       #     fsGroup: 1000
-      #     runAsUser: 0****
+      initContainers:
+      - name: init-chown-data
+        image: busybox
+        command: ['sh', '-c', 'chown 1001:1000 /var/run/docker.sock && chmod 660 /var/run/docker.sock']
+        volumeMounts:
+        - name: docker-sock
+          mountPath: /var/run/docker.sock
+        securityContext:
+          runAsUser: 0 # root
       # serviceAccountName: jenkins-admin
       containers:
         - name: jenkins
@@ -54,10 +62,16 @@ spec:
           volumeMounts:
             - name: jenkins-data
               mountPath: /var/jenkins_home
+            - name: docker-sock
+              mountPath: /var/run/docker.sock
       volumes:
         - name: jenkins-data
           persistentVolumeClaim:
-              claimName: jenkins-pv-claim
+            claimName: jenkins-pv-claim
+        - name: docker-sock
+          hostPath:
+            path: /var/run/docker.sock
+            type: Socket
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
