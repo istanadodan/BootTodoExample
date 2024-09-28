@@ -15,7 +15,7 @@ spec:
       initContainers:
       - name: init-chown-docker
         image: busybox
-        command: ['sh', '-c', 'docker=$(getent group docker|cut -d: -f3 || echo 999) && chown root:$docker /var/run/docker.sock && chmod 660 /var/run/docker.sock']
+        command: ['sh', '-c', 'DOCKER_GID=$(getent group docker|cut -d: -f3 || echo 999) && chown root:$DOCKER_GID /var/run/docker.sock && chmod 660 /var/run/docker.sock']
         volumeMounts:
         - name: docker-sock
           mountPath: /var/run/docker.sock
