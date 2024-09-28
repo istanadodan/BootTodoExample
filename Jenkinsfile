@@ -48,7 +48,7 @@ pipeline {
                     script {
                         // try {
                         // Docker Hub에 이미지 푸시
-                        docker.withServer('unix:///var/run/cri-dockerd.sock') {
+                        docker.withServer('unix:///var/run/docker.sock') {
                             // docker.withRegistry(DOCKER_REGISTRY, credentials(DOCKER_CREDENTIALS)) {
                             docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                                 // 빌드
