@@ -20,13 +20,13 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Git 저장소에서 코드를 체크아웃
-                git url: 'https://github.com/istanadodan/BootTodoExample.git', branch: 'main'
+                git url: 'https://github.com/istanadodan/Backend.git', branch: 'main'
             }
         }
         stage('Build') {
             steps {
                 // A 폴더로 이동하여 빌드 실행
-                dir('BootTodoExample') {
+                dir('Backend') {
                     // gradlew에 실행 권한 부여
                     sh 'chmod +x ./gradlew'
                     // 빌드 실행
@@ -37,14 +37,14 @@ pipeline {
         // stage('Test') {
         //     steps {
         //         // A 폴더에서 테스트 실행
-        //         dir('BootTodoExample') {
+        //         dir('Backend') {
         //             // s?h './gradlew test'
         //         }
         //     }
         // }
         stage('Deploy') {
             steps {
-                dir('BootTodoExample') {
+                dir('Backend') {
                     script {
                         // try {
                         // Docker Hub에 이미지 푸시
