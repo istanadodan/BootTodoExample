@@ -20,7 +20,7 @@ RUN rm -rf ${WEBAPPS_ROOT} && \
 COPY ./docker/tomcat-users.xml ${TOMCAT_ROOT}/conf/
 COPY ./docker/context.xml ${WEBAPPS_ROOT}/manager/META-INF/
 
-COPY ./build/libs/${WAR_FILE2} /tmp
+COPY ./Backend/build/libs/${WAR_FILE2} /tmp
 
 RUN mkdir -p ${WEBAPPS_ROOT}/demo && \
     unzip /tmp/${WAR_FILE2} -d ${WEBAPPS_ROOT}/demo && \
