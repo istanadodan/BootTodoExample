@@ -44,7 +44,7 @@ pipeline {
         // }
         stage('Deploy') {
             steps {
-                dir('Backend') {
+                // dir('Backend') {
                     script {
                         // try {
                         // Docker Hub에 이미지 푸시
@@ -61,7 +61,7 @@ pipeline {
                     //     error "Docker build or push failed: ${e.message}"
                     // }
                     }
-                }
+                // }
             }
         }
     }
