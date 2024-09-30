@@ -20,7 +20,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Git 저장소에서 코드를 체크아웃
-                git url: 'https://github.com/istanadodan/Backend.git', branch: 'main'
+                git url: 'https://github.com/istanadodan/BootTodoExample.git', branch: 'main'
             }
         }
         stage('Build') {
