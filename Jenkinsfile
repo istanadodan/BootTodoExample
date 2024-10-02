@@ -76,7 +76,7 @@ pipeline {
                     }
             }
         }
-    }
+        
         stage('Deploy backend') {
             when {
                 changeset "backend/**"
