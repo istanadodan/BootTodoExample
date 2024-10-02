@@ -7,7 +7,7 @@ import { TaskCard, taskModel } from "entities/task";
 
 import styles from "./styles.module.scss";
 
-import BEC from "entities/board/model/ApiComponentList"
+import BEC from "entities/board/model/ApiComponent"
 
 const TaskDetails = () => {
   const dispatch = useDispatch();
