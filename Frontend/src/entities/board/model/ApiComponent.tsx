@@ -10,6 +10,7 @@ function ApiComponent() {
   const url = `${process.env.REACT_APP_API_URL}/`;
 
   axios.defaults.withCredentials = false;
+  
   useEffect(() => {
     fetchData();
   }, []);
