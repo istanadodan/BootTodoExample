@@ -3,7 +3,7 @@ FROM nginx:alpine
 
 WORKDIR /app
 
-COPY . .
+COPY ./Frontend/build /usr/share/nginx/html
 
 # 네트워크 도구
 # RUN apt update && apt -y install iputils-ping

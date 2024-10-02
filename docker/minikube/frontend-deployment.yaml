@@ -22,8 +22,9 @@ spec:
       #     mountPath: /app    
       containers:
       - name: frontend
-        image: react:latest
-        imagePullPolicy: IfNotPresent
+        image: docker0now/react:latest
+        # imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
         # volumeMounts:
