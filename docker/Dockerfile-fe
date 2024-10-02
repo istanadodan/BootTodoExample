@@ -3,14 +3,6 @@ FROM nginx:alpine
 
 WORKDIR /app
 
-RUN npm install -g vite
-
-COPY ./Frontend/package.json .
-COPY ./Frontend/package-lock.json .
-
-RUN rm -rf node_modules
-RUN npm i
-
 COPY . .
 
 # 네트워크 도구

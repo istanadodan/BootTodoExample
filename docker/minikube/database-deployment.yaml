@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mysql-db
-        image: docker.io/library/docker-mysql:latest
+        image: docker.io/library/mysql:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3306

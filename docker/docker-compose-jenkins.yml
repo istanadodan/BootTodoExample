@@ -3,8 +3,9 @@ version: '1.0'
 services:
   jenkins:
     build:
-      context: .
-      dockerfile: ./Dockerfile_jenkins
+      context: ..
+      dockerfile: ./docker/Dockerfile-jenkins
+    image: jenkins
     container_name: jenkins
     environment:
       - DOCKER_HOST=tcp://docker:2376
