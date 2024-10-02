@@ -71,12 +71,25 @@ pipeline {
             steps {                
                 dir('Frontend') {
                     script {
-                        sh 'cp ./build /usr/share/nginx/html'
+
+                         docker.withServer('unix:///var/run/docker.sock') {
+                            // docker.withRegistry(DOCKER_REGISTRY, credentials(DOCKER_CREDENTIALS)) {
+                            docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
+                                // 빌드
+                                def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile_fe .')
+                                // 배포
+                                app.inside {
+                                    sh 'cp -r ./build /usr/share/nginx/html'
+                                }
+                                // docker hub에 등록
+                                app.push()
+                            }
                         }
                     }
+                }
             }
         }
-        
+
         stage('Deploy backend') {
             when {
                 changeset "backend/**"
@@ -90,7 +103,7 @@ pipeline {
                             // docker.withRegistry(DOCKER_REGISTRY, credentials(DOCKER_CREDENTIALS)) {
                             docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                                 // 빌드
-                                def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile_app2 .')
+                                def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile_be .')
                                 // docker hub에 등록
                                 app.push()
                             }

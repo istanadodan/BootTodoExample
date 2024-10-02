@@ -7,6 +7,8 @@ import { TaskCard, taskModel } from "entities/task";
 
 import styles from "./styles.module.scss";
 
+import BEC from "entities/board/model/ApiComponentList"
+
 const TaskDetails = () => {
   const dispatch = useDispatch();
   const { taskId } = useParams();
@@ -43,6 +45,7 @@ const TaskDetails = () => {
           actions={[<ToggleTask key="toggle" taskId={+taskId!} />]}
         />
       </Layout.Content>
+      <BEC /> 
     </Layout>
   );
 };
