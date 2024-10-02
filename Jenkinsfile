@@ -84,7 +84,7 @@ pipeline {
                             //  // 컨테이너 내부에서 파일 복사 작업 수행
                             app.withRun { container ->
                                 // Frontend 빌드 결과물을 Nginx 폴더로 복사
-                                sh "docker exec ${container.id} cp -r /Frontend/build/* /usr/share/nginx/html/"
+                                sh "docker exec ${container.id} cp -r ./Frontend/build/* /usr/share/nginx/html/"
                             }
                             // docker hub에 등록
                             app.push()
