@@ -1,5 +1,5 @@
 import { ApiResponse } from "shared/ApiRes";
-import "App.css";
+import "./App.css";
 
 interface Props {
   apiReslst: ApiResponse[];
