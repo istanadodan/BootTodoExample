@@ -9,6 +9,9 @@ export default defineConfig({
     tsconfigPaths(),
     EnvironmentPlugin("all", { prefix: "VITE_" }),
   ],
+  build: {
+    outDir: "build",
+  },
   resolve: {
     alias: [
       {
