@@ -15,6 +15,7 @@ pipeline {
     }
     tools {
         gradle 'gradle-tools'
+        nodejs 'nodejs-tools'
     }
     stages {
         stage('Checkout') {
@@ -33,6 +34,7 @@ pipeline {
                     // gradlew에 실행 권한 부여
                     // sh 'chmod +x ./gradlew'
                     // 빌드 실행
+                    sh 'npm install -g vite'
                     sh './vite build'
                 }
             }
