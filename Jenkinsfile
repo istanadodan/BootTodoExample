@@ -79,7 +79,7 @@ pipeline {
                             def app = docker.build(DOCKER_REAC_IMAGE, '-f ./docker/Dockerfile-fe .')
                             // 배포
                             app.inside {
-                                sh 'cp -r ./Frontend/build/* /usr/share/nginx/html/'
+                                sh 'sudo cp -r ./Frontend/build/* /usr/share/nginx/html/'
                             }
                             // docker hub에 등록
                             app.push()
