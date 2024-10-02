@@ -25,17 +25,16 @@ pipeline {
             }
         }
         stage('Build frontend') {
-            when {
-                changeset "frontend/**"
-            }
+            // when {
+            //     changeset "frontend/**"
+            // }
             steps {
                 // A 폴더로 이동하여 빌드 실행
                 dir('Frontend') {
                     // gradlew에 실행 권한 부여
                     // sh 'chmod +x ./gradlew'
                     // 빌드 실행
-                    sh 'npm install -g vite'
-                    sh './vite build'
+                    sh './npm run build'
                 }
             }
         }
