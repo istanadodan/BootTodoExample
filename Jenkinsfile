@@ -9,7 +9,8 @@ pipeline {
     // }
     agent any
     environment {
-        DOCKER_IMAGE = 'docker0now/boot'
+        DOCKER_BOOT_IMAGE = 'docker0now/boot'
+        DOCKER_REAC_IMAGE = 'docker0now/react'
         DOCKER_REGISTRY = 'https://registry-1.docker.io/'
         DOCKER_CREDENTIALS = 'docker-credential'
     }
@@ -75,7 +76,7 @@ pipeline {
                         // docker.withRegistry(DOCKER_REGISTRY, credentials(DOCKER_CREDENTIALS)) {
                         docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                             // 빌드
-                            def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile-fe .')
+                            def app = docker.build(DOCKER_REAC_IMAGE, '-f ./docker/Dockerfile-fe .')
                             // 배포
                             app.inside {
                                 sh 'cp -r ./Frontend/build /usr/share/nginx/html'
@@ -99,7 +100,7 @@ pipeline {
                         // Docker Hub에 이미지 푸시
                         docker.withServer('unix:///var/run/docker.sock') {
                             // docker.withRegistry(DOCKER_REGISTRY, credentials(DOCKER_CREDENTIALS)) {
-                            docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
+                            docker.withRegistry(DOCKER_BOOT_IMAGE, DOCKER_CREDENTIALS) {
                                 // 빌드
                                 def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile-be .')
                                 // docker hub에 등록
