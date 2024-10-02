@@ -44,9 +44,8 @@ const TaskDetails = () => {
           extra={<Link to="/">Back to tasks list</Link>}
           actions={[<ToggleTask key="toggle" taskId={+taskId!} />]}
         />
-      </Layout.Content>
       <BEC />
-       
+      </Layout.Content>
     </Layout>
   );
 };
