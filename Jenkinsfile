@@ -32,7 +32,7 @@ pipeline {
                 dir('Backend') {
                     gradle {
                         tasks 'build'
-                        switch '--warning-mode=all'
+                        switches '--warning-mode=all'
                         buildFile 'build.gradle'
                     }
                     // gradlew에 실행 권한 부여
