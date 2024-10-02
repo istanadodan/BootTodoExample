@@ -24,7 +24,7 @@ spec:
       # serviceAccountName: jenkins-admin
       containers:
         - name: jenkins
-          image: docker-jenkins
+          image: jenkins
           imagePullPolicy: IfNotPresent
           # env:
           # - name: JENKINS_URL

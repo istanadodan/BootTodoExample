@@ -1,4 +1,4 @@
-minikube delete
+# minikube delete
 
 minikube start `
 --memory=8192 `
@@ -12,9 +12,9 @@ minikube start `
 
 # docker image
 # minikube image load docker-server
-minikube image load docker-mysql
-minikube image load react
-minikube image load docker-jenkins
+# minikube image load mysql
+# minikube image load react
+# minikube image load jenkins
 
 $manifestDirectory = @(
   "D:\works\react-project\reactexample\docker\minikube"
