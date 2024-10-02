@@ -22,13 +22,13 @@ spec:
       #     mountPath: /app    
       containers:
       - name: frontend
-        image: docker.io/library/react:latest
+        image: react:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
-        volumeMounts:
-        - name: app-volume
-          mountPath: /usr/share/nginx/html
+        # volumeMounts:
+        # - name: app-volume
+        #   mountPath: /usr/share/nginx/html
         command: ['sh', '-c', 'nginx -g "daemon off;"']
       volumes:
       - name: app-volume

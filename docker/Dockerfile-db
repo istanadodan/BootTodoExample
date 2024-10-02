@@ -1,0 +1,8 @@
+FROM mysql:latest
+
+# 초기화 sql
+COPY ./docker/init_sql/init_ddl.sql /docker-entrypoint-initdb.d/init.sql
+
+EXPOSE 3306
+  
+CMD ["mysqld"]

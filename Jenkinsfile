@@ -24,13 +24,21 @@ pipeline {
             }
         }
         stage('Build') {
+            when {
+                changeset "backend/**"
+            }
             steps {
                 // A 폴더로 이동하여 빌드 실행
                 dir('Backend') {
+                    gradle {
+                        tasks 'build'
+                        switch '--warning-mode=all'
+                        buildFile 'build.gradle'
+                    }
                     // gradlew에 실행 권한 부여
-                    sh 'chmod +x ./gradlew'
+                    // sh 'chmod +x ./gradlew'
                     // 빌드 실행
-                    sh './gradlew build --warning-mode=all'
+                    // sh './gradlew build --warning-mode=all'
                 }
             }
         }
@@ -43,7 +51,10 @@ pipeline {
         //     }
         // }
         stage('Deploy') {
-            steps {
+            when {
+                changeset "backend/**"
+            }
+            steps {                
                 // dir('Backend') {
                     script {
                         // try {
