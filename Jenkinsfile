@@ -105,7 +105,7 @@ pipeline {
                             // docker.withRegistry(DOCKER_REGISTRY, credentials(DOCKER_CREDENTIALS)) {
                             docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                                 // 빌드
-                                def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile_be .')
+                                def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile-be .')
                                 // docker hub에 등록
                                 app.push()
                             }
