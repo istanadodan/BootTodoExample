@@ -34,7 +34,7 @@ pipeline {
                     // gradlew에 실행 권한 부여
                     // sh 'chmod +x ./gradlew'
                     // 빌드 실행
-                    sh './npm run build'
+                    sh 'npm run build'
                 }
             }
         }
@@ -70,21 +70,18 @@ pipeline {
                 changeset "frontend/**"
             }
             steps {                
-                dir('Frontend') {
                     script {
-
-                         docker.withServer('unix:///var/run/docker.sock') {
-                            // docker.withRegistry(DOCKER_REGISTRY, credentials(DOCKER_CREDENTIALS)) {
-                            docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
-                                // 빌드
-                                def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile-fe .')
-                                // 배포
-                                app.inside {
-                                    sh 'cp -r ./build /usr/share/nginx/html'
-                                }
-                                // docker hub에 등록
-                                app.push()
+                        docker.withServer('unix:///var/run/docker.sock') {
+                        // docker.withRegistry(DOCKER_REGISTRY, credentials(DOCKER_CREDENTIALS)) {
+                        docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
+                            // 빌드
+                            def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile-fe .')
+                            // 배포
+                            app.inside {
+                                sh 'cp -r ./build /usr/share/nginx/html'
                             }
+                            // docker hub에 등록
+                            app.push()
                         }
                     }
                 }
