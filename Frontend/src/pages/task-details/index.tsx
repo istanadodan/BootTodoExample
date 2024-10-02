@@ -45,7 +45,8 @@ const TaskDetails = () => {
           actions={[<ToggleTask key="toggle" taskId={+taskId!} />]}
         />
       </Layout.Content>
-      <BEC /> 
+      <BEC />
+       
     </Layout>
   );
 };
