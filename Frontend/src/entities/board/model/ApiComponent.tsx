@@ -7,11 +7,8 @@ function ApiComponent() {
   const [data, setData] = useState<ApiResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  // const url = "https://jsonplaceholder.typicode.com/posts";
-  // const url = "http://localhost/backend/demo/";
   const url = `${process.env.REACT_APP_API_URL}/`;
-  // const url = "/demo/";
-  // const header = { "withCredentials": false };
+
   axios.defaults.withCredentials = false;
   useEffect(() => {
     fetchData();
