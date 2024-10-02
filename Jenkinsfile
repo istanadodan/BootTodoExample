@@ -67,9 +67,9 @@ pipeline {
         //     }
         // }
         stage('Deploy frontend') {
-            when {
-                changeset "frontend/**"
-            }
+            // when {
+            //     changeset "frontend/**"
+            // }
             steps {                
                     script {
                         docker.withServer('unix:///var/run/docker.sock') {
