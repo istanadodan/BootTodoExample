@@ -78,8 +78,13 @@ pipeline {
                             // 빌드
                             def app = docker.build(DOCKER_REAC_IMAGE, '-f ./docker/Dockerfile-fe .')
                             // 배포
-                            app.inside {
-                                sh 'sudo cp -r ./Frontend/build/* /usr/share/nginx/html/'
+                            // app.inside {
+                            //     sh 'cp -r ./Frontend/build/* /usr/share/nginx/html/'
+                            // }
+                            //  // 컨테이너 내부에서 파일 복사 작업 수행
+                            app.withRun { container ->
+                                // Frontend 빌드 결과물을 Nginx 폴더로 복사
+                                sh "docker exec ${container.id} cp -r /app/Frontend/build/* /usr/share/nginx/html/"
                             }
                             // docker hub에 등록
                             app.push()
