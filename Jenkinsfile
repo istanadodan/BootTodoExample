@@ -78,7 +78,7 @@ pipeline {
                             // docker.withRegistry(DOCKER_REGISTRY, credentials(DOCKER_CREDENTIALS)) {
                             docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                                 // 빌드
-                                def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile_fe .')
+                                def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile-fe .')
                                 // 배포
                                 app.inside {
                                     sh 'cp -r ./build /usr/share/nginx/html'
