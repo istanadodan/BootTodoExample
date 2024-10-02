@@ -31,6 +31,7 @@ public class BoardController {
 		List<String> output = new ArrayList<String>();
 		output.add("data1");
 		output.add("data2");
+		output.add("data3");
 		return output;
 	}
 	

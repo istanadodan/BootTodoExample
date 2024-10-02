@@ -23,7 +23,21 @@ pipeline {
                 git url: 'https://github.com/istanadodan/BootTodoExample.git', branch: 'main'
             }
         }
-        stage('Build') {
+        stage('Build frontend') {
+            when {
+                changeset "frontend/**"
+            }
+            steps {
+                // A 폴더로 이동하여 빌드 실행
+                dir('Frontend') {
+                    // gradlew에 실행 권한 부여
+                    // sh 'chmod +x ./gradlew'
+                    // 빌드 실행
+                    sh './vite build'
+                }
+            }
+        }
+        stage('Build backend') {
             when {
                 changeset "backend/**"
             }
@@ -46,11 +60,24 @@ pipeline {
         //     steps {
         //         // A 폴더에서 테스트 실행
         //         dir('Backend') {
-        //             // s?h './gradlew test'
+        //             // sh './gradlew test'
         //         }
         //     }
         // }
-        stage('Deploy') {
+        stage('Deploy frontend') {
+            when {
+                changeset "frontend/**"
+            }
+            steps {                
+                dir('Frontend') {
+                    script {
+                        sh 'cp ./build /usr/share/nginx/html'
+                        }
+                    }
+            }
+        }
+    }
+        stage('Deploy backend') {
             when {
                 changeset "backend/**"
             }
