@@ -26,9 +26,9 @@ pipeline {
             }
         }
         stage('Build frontend') {
-            // when {
-            //     changeset "frontend/**"
-            // }
+            when {
+                changeset "frontend/**"
+            }
             steps {
                 // A 폴더로 이동하여 빌드 실행
                 dir('Frontend') {
@@ -67,9 +67,9 @@ pipeline {
         //     }
         // }
         stage('Deploy frontend') {
-            // when {
-            //     changeset "frontend/**"
-            // }
+            when {
+                changeset "frontend/**"
+            }
             steps {                
                     script {
                         docker.withServer('unix:///var/run/docker.sock') {
@@ -105,9 +105,9 @@ pipeline {
                         // Docker Hub에 이미지 푸시
                         docker.withServer('unix:///var/run/docker.sock') {
                             // docker.withRegistry(DOCKER_REGISTRY, credentials(DOCKER_CREDENTIALS)) {
-                            docker.withRegistry(DOCKER_BOOT_IMAGE, DOCKER_CREDENTIALS) {
+                            docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
                                 // 빌드
-                                def app = docker.build(DOCKER_IMAGE, '-f ./docker/Dockerfile-be .')
+                                def app = docker.build(DOCKER_BOOT_IMAGE, '-f ./docker/Dockerfile-be .')
                                 // docker hub에 등록
                                 app.push()
                             }

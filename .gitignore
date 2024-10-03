@@ -1,6 +1,7 @@
 **/build/
 **/node_modules/
 /.metadata/
+/.vscode/
 
 .dockerignore
 .gitignore
