@@ -1,7 +1,7 @@
 # Ngnix를 사용하여 애플리케이션 제공
 FROM nginx:alpine
 
-WORKDIR /app
+WORKDIR /usr/share/nginx/html
 
 COPY ./Frontend/build /usr/share/nginx/html
 

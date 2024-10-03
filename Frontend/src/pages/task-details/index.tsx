@@ -44,7 +44,10 @@ const TaskDetails = () => {
           extra={<Link to="/">Back to tasks list</Link>}
           actions={[<ToggleTask key="toggle" taskId={+taskId!} />]}
         />
+<<<<<<< Updated upstream
       {/* <BEC /> */}
+=======
+>>>>>>> Stashed changes
       </Layout.Content>
     </Layout>
   );
