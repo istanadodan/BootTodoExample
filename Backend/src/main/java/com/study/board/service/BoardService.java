@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 public class BoardService {
 
 	private static final Logger logger = LoggerFactory.getLogger(BoardService.class);
+	@Autowired
 	private BoardMapper boardMapper;
 	
-	@Autowired
 	public BoardService(BoardMapper boardMapper) {
 		this.boardMapper = boardMapper;
 	}
