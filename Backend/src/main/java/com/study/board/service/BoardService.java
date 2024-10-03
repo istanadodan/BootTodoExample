@@ -20,8 +20,9 @@ public class BoardService {
 	public BoardService(BoardMapper boardMapper) {
 		this.boardMapper = boardMapper;
 	}
-
+	
 	public List<Board> getAllBoardList() {
+		logger.info("BoardService.getAllBoardList()");
 		return  boardMapper.getAllBoardList();
 	}
 }
