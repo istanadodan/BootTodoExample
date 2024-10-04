@@ -1,12 +1,13 @@
 const getEnvVar = (key: string) => {
   if (import.meta.env[key] === undefined) {
+    console.log('err:', import.meta.env);
     throw new Error(`Env variable ${key} is required`);
   }
   return String(import.meta.env[key]) || "";
 };
 
 export const API_URL = getEnvVar("VITE_APP_API_URL");
-export const BE_API_URL = getEnvVar("REACT_API_URL");
+export const BE_API_URL = getEnvVar("VITE_BE_API_URL");
 export const NODE_ENV = getEnvVar("VITE_NODE_ENV");
 
 export const isDevEnv = NODE_ENV === "development";

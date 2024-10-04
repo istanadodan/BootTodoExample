@@ -10,8 +10,8 @@ export default defineConfig({
     EnvironmentPlugin("all", { prefix: "VITE_" }),
   ],
   build: {
-    outDir: "build",
-  }, 
+    outDir: 'build',
+  },
   resolve: {
     alias: [
       {

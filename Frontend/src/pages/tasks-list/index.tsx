@@ -5,7 +5,7 @@ import { TasksFilters } from "features/task-filters";
 import { ToggleTask } from "features/toggle-task";
 
 import { taskModel, TaskRow } from "entities/task";
-
+import AAA from "entities/board/ui/ApiComponentList"
 import styles from "./styles.module.scss";
 
 const TasksList = () => {
@@ -18,6 +18,7 @@ const TasksList = () => {
         <Row justify="center">
           <TasksFilters />
         </Row>
+      <AAA/>
       </Layout>
       <Layout.Content className={styles.content}>
         <Row gutter={[0, 20]} justify="center">
