@@ -6,7 +6,7 @@ import { ToggleTask } from "features/toggle-task";
 import { TaskCard, taskModel } from "entities/task";
 
 import styles from "./styles.module.scss";
-import AA from "entities/board/ui/ApiComponentList"
+// import AA from "entities/board/ui/ApiComponentList"
 
 const TaskDetails = () => {
   const dispatch = useDispatch();
