@@ -7,8 +7,6 @@ import { TaskCard, taskModel } from "entities/task";
 
 import styles from "./styles.module.scss";
 
-import BEC from "entities/board/model/ApiComponent"
-
 const TaskDetails = () => {
   const dispatch = useDispatch();
   const { taskId } = useParams();
@@ -44,10 +42,6 @@ const TaskDetails = () => {
           extra={<Link to="/">Back to tasks list</Link>}
           actions={[<ToggleTask key="toggle" taskId={+taskId!} />]}
         />
-<<<<<<< Updated upstream
-      {/* <BEC /> */}
-=======
->>>>>>> Stashed changes
       </Layout.Content>
     </Layout>
   );
