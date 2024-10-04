@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { ApiResponse } from "shared/ApiRes";
 import Res from "../model/ApiRes";
+import {BE_API_URL} from "shared/config/index"
 
 function Component() {
   const [data, setData] = useState<ApiResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const url = `${process.env.REACT_APP_API_URL}/list`;
+  const url = `${BE_API_URL}/list`;
   // const header = { "withCredentials": false };
 
   axios.defaults.withCredentials = false;
