@@ -6,7 +6,7 @@ import { ToggleTask } from "features/toggle-task";
 import { TaskCard, taskModel } from "entities/task";
 
 import styles from "./styles.module.scss";
-// import AA from "entities/board/ui/ApiComponentList"
+import AA from "entities/board/ui/ApiComponent"
 
 const TaskDetails = () => {
   const dispatch = useDispatch();
@@ -44,7 +44,7 @@ const TaskDetails = () => {
           actions={[<ToggleTask key="toggle" taskId={+taskId!} />]}
         />
       </Layout.Content>
-      {/* <AA /> */}
+      <AA />
     </Layout>
   );
 };
