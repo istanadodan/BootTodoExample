@@ -1,4 +1,4 @@
-import { ApiResponse } from "shared/ApiRes";
+import { ApiResponse } from "../model/ApiRes";
 import "./App.css";
 
 interface Props {
