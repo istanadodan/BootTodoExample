@@ -2,10 +2,8 @@
 **/node_modules/
 /.metadata/
 /.vscode/
-Frontend1
 Frontendkk
 .dockerignore
-.gitignore
 .gitignore
 
 *.class
