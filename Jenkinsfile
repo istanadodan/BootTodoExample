@@ -29,9 +29,9 @@ pipeline {
             }
         }
         stage('Build frontend') {
-            when {
-                changeset "frontend/**"
-            }
+            // when {
+            //     changeset "frontend/**"
+            // }
             steps {
                 // A 폴더로 이동하여 빌드 실행
                 dir('Frontend') {
@@ -43,9 +43,9 @@ pipeline {
             }
         }
         stage('Build backend') {
-            when {
-                changeset "backend/**"
-            }
+            // when {
+            //     changeset "backend/**"
+            // }
             steps {
                 // A 폴더로 이동하여 빌드 실행
                 dir('Backend') {
@@ -70,9 +70,9 @@ pipeline {
         //     }
         // }
         stage('Deploy frontend') {
-            when {
-                changeset "frontend/**"
-            }
+            // when {
+            //     changeset "frontend/**"
+            // }
             steps {                
                     script {
                         docker.withServer('unix:///var/run/docker.sock') {
@@ -98,9 +98,9 @@ pipeline {
         }
 
         stage('Deploy backend') {
-            when {
-                changeset "backend/**"
-            }
+            // when {
+            //     changeset "backend/**"
+            // }
             steps {                
                 // dir('Backend') {
                     script {
