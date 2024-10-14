@@ -9,9 +9,11 @@ pipeline {
     // }
     agent any
     environment {
-        DOCKER_BOOT_IMAGE = 'docker0now/boot'
-        DOCKER_REAC_IMAGE = 'docker0now/react'
+        // DOCKER_BOOT_IMAGE = 'docker0now/boot'
+        // DOCKER_REAC_IMAGE = 'docker0now/react'
         // DOCKER_REGISTRY = 'https://registry-1.docker.io/'
+        DOCKER_BOOT_IMAGE = 'local-registry:5000/boot'
+        DOCKER_REAC_IMAGE = 'local-registry:5000/react'
         DOCKER_REGISTRY = 'http//local-registry:5000/'
         DOCKER_CREDENTIALS = 'docker-credential'
     }
