@@ -14,7 +14,7 @@ pipeline {
         // DOCKER_REGISTRY = 'https://registry-1.docker.io/'
         DOCKER_BOOT_IMAGE = 'local-registry:5000/boot'
         DOCKER_REAC_IMAGE = 'local-registry:5000/react'
-        DOCKER_REGISTRY = 'http//local-registry:5000/'
+        DOCKER_REGISTRY = 'http://local-registry:5000/'
         DOCKER_CREDENTIALS = 'local-docker'
     }
     tools {
