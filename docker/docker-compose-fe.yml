@@ -1,6 +1,6 @@
 services:
     react:
-        image: react
+        image: local-registry:5000/react
         build:
             context: ..
             dockerfile: ./docker/Dockerfile-fe

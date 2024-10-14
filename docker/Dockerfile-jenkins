@@ -25,19 +25,19 @@ RUN apt-get update && \
     apt-get update && \
     apt-get -y install docker-ce-cli
 
-  # Node.js 및 npm 설치
-  RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
-      apt-get install -y nodejs
-  
-  COPY ./Frontend/package.json .
-  COPY ./Frontend/package-lock.json .
-  RUN npm install
+# Node.js 및 npm 설치
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash - && \
+    apt-get install -y nodejs
+
+COPY ./Frontend/package.json .
+COPY ./Frontend/package-lock.json .
+RUN npm install
 
 # APT 캐시 정리
 RUN rm -rf /var/lib/apt/lists/*
 
 # docker 그룹에 jenkins 사용자 추가
-RUN usermod -aG systemd-journal jenkins
+RUN groupadd docker && usermod -aG docker jenkins
 RUN chmod -R 777 /var/run
 
 # 포트 설정

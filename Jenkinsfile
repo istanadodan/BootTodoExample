@@ -15,11 +15,11 @@ pipeline {
         DOCKER_BOOT_IMAGE = 'local-registry:5000/boot'
         DOCKER_REAC_IMAGE = 'local-registry:5000/react'
         DOCKER_REGISTRY = 'http//local-registry:5000/'
-        DOCKER_CREDENTIALS = 'docker-credential'
+        DOCKER_CREDENTIALS = 'local-docker'
     }
     tools {
         gradle 'gradle-tools'
-        nodejs 'nodejs-tools'
+        // nodejs 'nodejs-tools'
     }
     stages {
         stage('Checkout') {
