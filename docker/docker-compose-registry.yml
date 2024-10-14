@@ -1,0 +1,25 @@
+services:
+  registry:
+    build: 
+      context: ..
+      dockerfile: ./docker/Dockerfile-registry
+    image: registry
+    container_name: registry
+    environment:
+      REGISTRY_AUTH: htpasswd
+      REGISTRY_AUTH_HTPASSWD_PATH: /auth/htpasswd
+      REGISTRY_AUTH_HTPASSWD_REALM: Registry Realm
+      USERNAME: docker
+      PASSWORD: password
+    ports:
+      - '5000:5000'
+    volumes:
+      - D://.data/registry:/var/lib/registry
+    restart: always
+volumes:
+  registry_home:
+    driver: local
+    driver_opts:
+      type: none
+      device: "D:/.data/registry"
+      o: bind

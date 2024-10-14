@@ -12,6 +12,16 @@ spec:
       labels:
         app: database-pod
     spec:
+      # initContainers:
+      # - name: init-db
+      #   # image: alpine
+      #   # command: ['sh', '-c', 'apk add shadow; getent group docker || groupadd docker; chown :docker /var/lib/mysql']
+      #   image: busybox
+      #   # command: ['sh', '-c', 'chown :999 /var/lib/mysql; chmod -R 600 /var/lib/mysql']
+      #   command: ['sh', '-c', 'chown :999 /var/lib/mysql']
+      #   volumeMounts:
+      #   - name: db-storage
+      #     mountPath: /var/lib/mysql
       containers:
       - name: mysql-db
         image: docker.io/library/mysql:latest
@@ -21,38 +31,10 @@ spec:
         envFrom:
         - secretRef:
             name: db-secrets
-        volumeMounts:
-        - name: db-storage
-          mountPath: /var/lib/mysql
+        # volumeMounts:
+        # - name: db-storage
+        #   mountPath: /var/lib/mysql
       volumes:
       - name: db-storage
         persistentVolumeClaim:
           claimName: mysql-pvc
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-   name: mysql-pvc
-spec:
-   accessModes:
-   - ReadWriteOnce
-   resources:
-     requests:
-       storage: 1Gi
-   storageClassName: manual
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: host-pv
-spec:
-  capacity:
-    storage: 1Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: manual
-  hostPath:
-    path: "/mnt/mysql"
-    type: DirectoryOrCreate

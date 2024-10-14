@@ -29,9 +29,9 @@ spec:
             pathType: ImplementationSpecific
             backend:
               service:
-                name: frontend
+                name: backend
                 port:
-                  number: 3000
+                  number: 8080
           - path: /(.*)
             pathType: ImplementationSpecific
             backend:

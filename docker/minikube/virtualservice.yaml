@@ -8,22 +8,14 @@ spec:
   gateways:
   - helloworld-gateway
   http:
-  - match:
-    - uri:
-        exact: /hello
-    route:
-    - destination:
-        host: helloworld
-        port:
-          number: 5000
-  - match:
-    - uri:
-        prefix: /mydb
-    route:
-    - destination:
-        host: database
-        port:
-          number: 3306
+  # - match:
+  #   - uri:
+  #       prefix: /mydb
+  #   route:
+  #   - destination:
+  #       host: database
+  #       port:
+  #         number: 3306
   - match:
     - uri:
         exact: /

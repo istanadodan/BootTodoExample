@@ -23,17 +23,22 @@ spec:
       containers:
       - name: frontend
         # image: docker0now/react:latest
-        image: localhost:5000/react:latest
+        # image: host.minikube.internal:5000/react:latest
+        image: local-registry:5000/react:latest
+        # image: nginx:latest
         # imagePullPolicy: IfNotPresent
         imagePullPolicy: Always
         ports:
         - containerPort: 80
-        # volumeMounts:
-        # - name: app-volume
-        #   mountPath: /usr/share/nginx/html
+        volumeMounts:
+        - name: app-volume
+          mountPath: /usr/share/nginx/html
         command: ['sh', '-c', 'nginx -g "daemon off;"']
+        securityContext:
+          runAsGroup: 0
+      imagePullSecrets:
+      - name: regcred
       volumes:
       - name: app-volume
-        hostPath:
-          path: /mnt/app
-          type: DirectoryOrCreate
+        persistentVolumeClaim:
+          claimName: frontend-pvc

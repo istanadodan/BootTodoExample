@@ -8,7 +8,7 @@ function Component() {
   const [data, setData] = useState<ApiResponse[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const url = `${BE_API_URL}/list`;
+  const url = `${BE_API_URL}/demo/list`;
   // const header = { "withCredentials": false };
 
   axios.defaults.withCredentials = false;

@@ -21,7 +21,7 @@ function Start-ServiceJob {
     # } -Name FE-service | Out-Null
 
     Start-Job -ScriptBlock {
-        minikube tunnel
+        minikube tunnel --cleanup
     } -Name Tunneling | Out-Null    
     
     Write-Host "Minikube tunnel started."

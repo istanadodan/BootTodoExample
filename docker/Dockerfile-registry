@@ -1,0 +1,11 @@
+# Jenkins LTS 이미지 기반
+FROM registry:latest
+
+USER root
+RUN apk add --no-cache apache2-utils
+
+RUN mkdir -p /auth
+RUN htpasswd -Bbc /auth/htpasswd ${USERNAME:-docker} ${PASSWORD:-password}
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["registry", "serve", "/etc/docker/registry/config.yml"]

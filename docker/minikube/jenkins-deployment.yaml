@@ -13,88 +13,68 @@ spec:
         app: jenkins
     spec:
       initContainers:
-      - name: init-chown-docker
-        image: busybox
-        command: ['sh', '-c', 'chown 0:1001 /var/run/docker.sock && chmod 660 /var/run/docker.sock']
+      # - name: init-chown-docker
+      #   image: alpine
+      #   command: ['sh', '-c', 'apk add shadow; getent group docker || groupadd docker; chown :docker /var/run/docker.sock && chmod 660 /var/run/docker.sock']
+      #   volumeMounts:
+        # securityContext:
+        #   runAsGroup: 0
+      - name: init-jenkins
+        image: alpine
+        command: ['sh', '-c', 'chown :999 /var/run/docker.sock; chmod 660 /var/run/docker.sock; chmod -R 777 /var/jenkins_home']
         volumeMounts:
-        - name: docker-sock
-          mountPath: /var/run/docker.sock
-        securityContext:
-          runAsGroup: 0
+          - name: jenkins-mnt
+            mountPath: /var/jenkins_home
+          - name: docker-sock
+            mountPath: /var/run/docker.sock
       # serviceAccountName: jenkins-admin
       containers:
-        - name: jenkins
-          image: jenkins
-          imagePullPolicy: IfNotPresent
-          # env:
-          # - name: JENKINS_URL
-          #   value: http://localhost:8080/jenkins/
-          resources:
-            limits:
-              memory: "2Gi"
-              cpu: "1000m"
-            requests:
-              memory: "500Mi"
-              cpu: "500m"
-          ports:
-            - name: httpport
-              containerPort: 8080
-            - name: jnlpport
-              containerPort: 50000
-          # livenessProbe:
-          #   httpGet:
-          #     path: "/login"
-          #     port: 8080
-          #   initialDelaySeconds: 90
-          #   periodSeconds: 10
-          #   timeoutSeconds: 5
-          #   failureThreshold: 5
-          # readinessProbe:
-          #   httpGet:
-          #     path: "/login"
-          #     port: 8080
-          #   initialDelaySeconds: 60
-          #   periodSeconds: 10
-          #   timeoutSeconds: 5
-          #   failureThreshold: 3
-          volumeMounts:
-            - name: jenkins-data
-              mountPath: /var/jenkins_home
-            - name: docker-sock
-              mountPath: /var/run/docker.sock
+      - name: jenkins
+        image: jenkins
+        imagePullPolicy: IfNotPresent
+        # env:
+        # - name: JENKINS_URL
+        #   value: http://localhost:8080/jenkins/
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+          requests:
+            memory: "500Mi"
+            cpu: "500m"
+        securityContext:
+            runAsGroup: 0
+        ports:
+          - name: httpport
+            containerPort: 8080
+          - name: jnlpport
+            containerPort: 50000
+        # livenessProbe:
+        #   httpGet:
+        #     path: "/login"
+        #     port: 8080
+        #   initialDelaySeconds: 90
+        #   periodSeconds: 10
+        #   timeoutSeconds: 5
+        #   failureThreshold: 5
+        # readinessProbe:
+        #   httpGet:
+        #     path: "/login"
+        #     port: 8080
+        #   initialDelaySeconds: 60
+        #   periodSeconds: 10
+        #   timeoutSeconds: 5
+        #   failureThreshold: 3
+        volumeMounts:
+          - name: jenkins-mnt
+            mountPath: /var/jenkins_home
+          - name: docker-sock
+            mountPath: /var/run/docker.sock
       volumes:
-        - name: jenkins-data
+        - name: jenkins-mnt
           persistentVolumeClaim:
-            claimName: jenkins-pv-claim
+            claimName: jenkins-pvc
         - name: docker-sock
           hostPath:
             path: /var/run/docker.sock
             type: Socket
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: jenkins-pv-claim
-spec:
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 1Gi
-  storageClassName: jenkins-volume
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: jenkins-pv-volume
-spec:
-  capacity:
-    storage: 1Gi
-  volumeMode: Filesystem
-  accessModes:
-    - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  storageClassName: jenkins-volume
-  hostPath:
-    path: "/mnt/jenkins"
-    type: DirectoryOrCreate
