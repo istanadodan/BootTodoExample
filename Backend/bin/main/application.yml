@@ -1,17 +1,71 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://database:3306/mydb?serverTimezone=UTC&characterEncoding=utf8
+    url: jdbc:mysql://localhost:3336/mydb?serverTimezone=UTC&characterEncoding=utf8
     username: root
     password: verysecret
   application:
-    name: Backend
+    name: ksd-sto
+  security:
+    user:
+      name: user
+      password: pass
+  web:
+    resources:
+      static-locations:
+      - classpath:/public/
+      - file:/upload/
+      cache:
+        period: 3600
+
+######################
+### Mybatis
+#####################
 mybatis:
-  type-aliases-package: com.study.board.dto
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: kr.or.ksd.sto.dto
   configuration:
     map-underscore-to-camel-case: true
-  mapper-locations: classpath:mapper/*.xml
-# logging:
-#   level:
-#     org.mybatis: TRACE
-#     com.study.board.dao: DEBUG
+
+jwt:
+  secret: szOh8kHoN6XnQnx+sFOQrEVgWKrH9NKiJidgxp0zXNY=
+  token-validity-in-seconds: 86400
+
+#########################
+## logging
+########################
+logging:
+  level:
+    root: INFO
+    org.mybatis: TRACE
+    kr.or.ksd.sto: DEBUG
+  file:
+    name: /logs/application.log  # 로그 파일 이름 지정
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"  # 콘솔 출력 패턴
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"    # 파일 출력 패턴
+  logback:
+    rollingpolicy:
+      fileNamePattern: "application-%d{yyyy-MM-dd}.log"  # 롤링 로그 파일 패턴
+      maxHistory: 30  # 로그 보관 일수  
+
+server:
+  port: 8082
+  servlet:
+    context-path: /
+    session:
+      timeout: 30m
+    encoding:
+      charset: UTF-8
+      force: true
+
+#################
+##### swagger 설정
+################
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+      

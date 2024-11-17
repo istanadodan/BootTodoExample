@@ -31,9 +31,9 @@ spec:
         envFrom:
         - secretRef:
             name: db-secrets
-        # volumeMounts:
-        # - name: db-storage
-        #   mountPath: /var/lib/mysql
+        volumeMounts:
+        - name: db-storage
+          mountPath: /var/lib/mysql
       volumes:
       - name: db-storage
         persistentVolumeClaim:

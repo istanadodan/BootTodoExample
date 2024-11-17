@@ -6,6 +6,7 @@ minikube start `
 --cpus=4 `
 --driver docker `
 --insecure-registry "local-registry:5000" `
+--insecure-registry "local-registry:5001" `
 --mount-string="D:\.data\minikube:/mnt/host" `
 --mount
 #--docker-opt  "group=1000" `

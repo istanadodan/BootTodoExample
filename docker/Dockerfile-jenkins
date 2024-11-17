@@ -44,6 +44,9 @@ RUN chmod -R 777 /var/run
 EXPOSE 8080
 EXPOSE 50000
 
+RUN mkdir -p /etc/docker
+# 사설 registry
+RUN echo '{"insecure-registries":["local-registry:5000"]}' >> /etc/docker/daemon.json
 # 유저 전환
 USER jenkins
 

@@ -67,7 +67,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: frontend-volume
   hostPath:
-    path: "/mnt/app"
+    path: "/mnt/host/app"
     type: DirectoryOrCreate
 ---
 apiVersion: v1
