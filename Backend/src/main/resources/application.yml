@@ -17,13 +17,17 @@ spring:
       - file:/upload/
       cache:
         period: 3600
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MariaDBDialect
 
 ######################
 ### Mybatis
 #####################
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: kr.or.ksd.sto.dto
+  type-aliases-package: kr.or.ksd.sto.auth,kr.or.ksd.sto.dao
   configuration:
     map-underscore-to-camel-case: true
 

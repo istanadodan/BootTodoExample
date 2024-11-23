@@ -11,21 +11,19 @@ import io.swagger.v3.oas.models.security.SecurityScheme;
 @Configuration
 public class SwaggerConfig {
 
-	@Bean
-	OpenAPI openAPI() {
-		SecurityScheme securityScheme = new SecurityScheme()
-				.type(SecurityScheme.Type.HTTP)
-				.scheme("bearer")
-				.bearerFormat("JWT")
-				.in(SecurityScheme.In.HEADER)
-				.name("Authorization");
+    @Bean
+    OpenAPI openAPI() {
+        SecurityScheme securityScheme = new SecurityScheme()
+            .type(SecurityScheme.Type.HTTP)
+            .scheme("bearer")
+            .bearerFormat("JWT")
+            .in(SecurityScheme.In.HEADER)
+            .name("Authorization");
 
-		SecurityRequirement securityRequirement = new SecurityRequirement().addList("bearerAuth");
+        SecurityRequirement securityRequirement = new SecurityRequirement().addList("bearerAuth");
 
-		return new OpenAPI()
-				.components(
-						new Components().addSecuritySchemes("bearerAuth", securityScheme)
-				)
-				.addSecurityItem(securityRequirement);
-	}
+        return new OpenAPI()
+            .components(new Components().addSecuritySchemes("bearerAuth", securityScheme))
+            .addSecurityItem(securityRequirement);
+    }
 }

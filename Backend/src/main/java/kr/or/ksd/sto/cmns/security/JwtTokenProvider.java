@@ -106,4 +106,9 @@ public class JwtTokenProvider {
             throw new JwtException("JWT token is invalid");
         }
     }
+
+    public String createToken(Authentication authentication) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }
