@@ -26,7 +26,7 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/**")
+                .requestMatchers("/api/**","/admin")
                 .authenticated()
                 // .requestMatchers("/swagger-ui/**", "/v3/api-docs/**",
                 // "/swagger-resources/**", "/swagger-ui.html"
@@ -41,7 +41,9 @@ public class SecurityConfig {
             .formLogin(login -> login
                 .usernameParameter("userId")
                 .passwordParameter("password")
-                .loginProcessingUrl("/login2"));
+                .loginProcessingUrl("/login2")
+                .loginPage("/admin")
+             );
 
         return http.build();
     }
