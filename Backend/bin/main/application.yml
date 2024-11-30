@@ -13,10 +13,15 @@ spring:
   web:
     resources:
       static-locations:
-      - classpath:public/
-      - file:upload/
+      - classpath:/public
+      - file:/upload
       cache:
         period: 3600
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
 #  jpa:
 #    hibernate:
 #      ddl-auto: update

@@ -1,12 +1,12 @@
-package ksd.sto.ndm.dao;
+package ksd.sto.ndm.infs;
 
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import ksd.sto.ndm.dto.Board;
+import ksd.sto.ndm.domain.dto.BoardDTO;
 
 @Mapper
 public interface BoardDao {
-	List<Board> getAllBoardList();
+	List<BoardDTO> getAllBoardList();
 }

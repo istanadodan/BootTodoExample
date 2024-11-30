@@ -7,13 +7,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest
 class BoardApplicationTests {
-    
+
     @Autowired
     private PasswordEncoder encoder;
-	@Test
-	void contextLoads() {
-	    String passwordString = "1111";
-	    String enPwString = encoder.encode(passwordString);
-	    System.out.println(enPwString);
-	}
+    @Test
+    void contextLoads() {
+        String passwordString = "1111";
+        String enPwString = encoder.encode(passwordString);
+        System.out.println(enPwString);
+    }
 }

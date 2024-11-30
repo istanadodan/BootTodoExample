@@ -1,4 +1,4 @@
-package ksd.sto.ndm.controller;
+package ksd.sto.ndm.domain.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import ksd.sto.ndm.cmns.security.JwtTokenProvider;
-import ksd.sto.ndm.dto.Board;
-import ksd.sto.ndm.service.BoardService;
+import ksd.sto.ndm.domain.dto.BoardDTO;
+import ksd.sto.ndm.domain.service.BoardService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -33,7 +33,7 @@ public class BoardController {
     }
 
     @GetMapping("/list")
-    public List<Board> finaAll() {
+    public List<BoardDTO> finaAll() {
         return boardService.getAllBoardList();
     }
 

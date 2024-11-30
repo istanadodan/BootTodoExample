@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="ksd.sto.ndm.dao.BoardDao">
+<mapper namespace="ksd.sto.ndm.infs.BoardDao">
 <resultMap id="boardResultMap" type="BoardVO">
     <id property="boardId" column="board_id"/> 
     <result property="boardWriter" column="board_writer"/>

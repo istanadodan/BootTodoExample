@@ -1,4 +1,4 @@
-package ksd.sto.ndm.dao;
+package ksd.sto.ndm.domain.dto;
 
 import java.time.LocalDateTime;
 
@@ -14,7 +14,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 //@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class BoardVO {
+public class BoardDTO {
 	private long boardId;
 	private String boardTitle;
 	private String boardContents;

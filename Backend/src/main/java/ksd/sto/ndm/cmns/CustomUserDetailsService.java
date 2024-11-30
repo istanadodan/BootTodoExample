@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import ksd.sto.ndm.dao.UserDao;
-import ksd.sto.ndm.dao.UserVO;
+import ksd.sto.ndm.infs.UserDao;
+import ksd.sto.ndm.infs.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 
 

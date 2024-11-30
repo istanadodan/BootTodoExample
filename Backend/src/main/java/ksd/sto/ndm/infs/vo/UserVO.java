@@ -1,4 +1,4 @@
-package ksd.sto.ndm.dao;
+package ksd.sto.ndm.infs.vo;
 
 import java.sql.Date;
 

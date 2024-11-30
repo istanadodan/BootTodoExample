@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-//@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
 @SpringBootApplication
-//@EnableJpaRepositories(basePackages = "kr.or.ksd.sto.repository")
+@EnableTransactionManagement
 public class BoardApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {

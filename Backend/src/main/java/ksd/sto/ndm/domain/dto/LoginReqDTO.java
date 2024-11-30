@@ -1,4 +1,4 @@
-package ksd.sto.ndm.auth;
+package ksd.sto.ndm.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;

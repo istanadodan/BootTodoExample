@@ -1,23 +1,21 @@
-package ksd.sto.ndm.service;
+package ksd.sto.ndm.domain.service;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
-import ksd.sto.ndm.dao.BoardDao;
-import ksd.sto.ndm.dto.Board;
+import ksd.sto.ndm.domain.dto.BoardDTO;
+import ksd.sto.ndm.infs.BoardDao;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 
-@Log4j
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardService {
 
 	private final BoardDao boardDao;
 	
-	public List<Board> getAllBoardList() {
+	public List<BoardDTO> getAllBoardList() {
 	    log.info("BoardService.getAllBoardList()");
 		return  boardDao.getAllBoardList();
-	}
+	}	
 }

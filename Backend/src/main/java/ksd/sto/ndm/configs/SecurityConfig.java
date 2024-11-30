@@ -2,6 +2,9 @@ package ksd.sto.ndm.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -16,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
+@EnableMethodSecurity
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -24,26 +28,19 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .sessionManagement(
+                    session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/**","/admin")
+                .requestMatchers("/admin", "/api/**")
                 .authenticated()
-                // .requestMatchers("/swagger-ui/**", "/v3/api-docs/**",
-                // "/swagger-resources/**", "/swagger-ui.html"
-                // "/webjars/**",
-                // "/configuration/**"
-                // )
-                // .hasRole("ADMIN")
-                // .permitAll()
                 .anyRequest()
                 .permitAll())
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-            .formLogin(login -> login
-                .usernameParameter("userId")
-                .passwordParameter("password")
-                .loginProcessingUrl("/login2")
-                .loginPage("/admin")
-             );
+            .formLogin(
+                    req -> req.loginPage("/login_admin.html").loginProcessingUrl("/inter-process")
+            // .usernameParameter("userId")
+            // .passwordParameter("password")
+            )
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -51,6 +48,15 @@ public class SecurityConfig {
     @Bean
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    /**
+     * 계층구조에서 권한을 구분할 때 줄바꿈으로 분리.
+     * @return
+     */
+    @Bean
+    RoleHierarchy roleHierachy() {
+        return RoleHierarchyImpl.fromHierarchy("ROLE_ADMIN > ROLE_NP_MANAGE\nROLE_NA_MANAGER\nROLE_SYS_MANAGER > ROLE_USER");
     }
 
     // @Bean

@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 @Configuration
-@MapperScan("ksd.sto.ndm.dao")
+@MapperScan("ksd.sto.ndm.infs")
 public class MybatisConfig {
 
     /**
@@ -25,11 +25,11 @@ public class MybatisConfig {
      */
     @Bean
     SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-        SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
-        sqlSessionFactoryBean.setDataSource(dataSource); // 데이터 소스 설정
+        SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
+        factoryBean.setDataSource(dataSource); // 데이터 소스 설정
         // MyBatis 설정 파일 위치 지정
-        sqlSessionFactoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
-        sqlSessionFactoryBean.setTypeAliasesPackage("ksd.sto.ndm.dao");
+        factoryBean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mybatis/mappers/**/*.xml"));
+        factoryBean.setTypeAliasesPackage("ksd.sto.ndm.domain.**.dto, ksd.sto.ndm.infs.**.vo");
         /*
          * ibatis 세부 설정
          */
@@ -37,10 +37,9 @@ public class MybatisConfig {
         configuration.setMapUnderscoreToCamelCase(true);
         configuration.setJdbcTypeForNull(JdbcType.NULL);
         configuration.setCallSettersOnNulls(true);
-        sqlSessionFactoryBean.setConfiguration(configuration);
+        factoryBean.setConfiguration(configuration);
         
-//        sqlSessionFactoryBean.setConfigLocation(new ClassPathResource("mybatis-config.xml"));
-        return sqlSessionFactoryBean.getObject(); // SqlSessionFactory 반환
+        return factoryBean.getObject(); // SqlSessionFactory 반환
     }
 
     /**
