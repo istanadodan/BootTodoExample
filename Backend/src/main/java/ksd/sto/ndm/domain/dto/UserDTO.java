@@ -1,6 +1,9 @@
 package ksd.sto.ndm.domain.dto;
 
 import java.util.Date;
+import java.util.Objects;
+
+import org.apache.commons.lang3.time.DateUtils;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,7 +23,8 @@ public class UserDTO {
     private String password;
     private String roles;
     @JsonIgnore
-    private Date regDate;
+    @Builder.Default
+    private Date regDate = new Date();
     @JsonIgnore
     private Date modDate;
 }

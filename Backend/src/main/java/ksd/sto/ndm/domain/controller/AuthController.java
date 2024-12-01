@@ -23,47 +23,44 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class AuthController {
 
-	private final JwtTokenProvider jwtTokenProvider;
-	private final UserServiceImpl userService;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final UserServiceImpl userService;
 
-	@Operation(security = { @SecurityRequirement(name = "bearerAuth") })
-	@GetMapping("/example")
-	public ResponseEntity<String> exampleEndpoint() {
-		// API 로직
-		return ResponseEntity.ok("Hello");
-	}
+    @Operation(security = {@SecurityRequirement(name = "bearerAuth")})
+    @GetMapping("/example")
+    public ResponseEntity<String> exampleEndpoint() {
+        // API 로직
+        return ResponseEntity.ok("Hello");
+    }
 
-	@GetMapping("/login")
-	public ResponseEntity<String> login(@RequestParam("userId") String userid, @RequestParam("password") String password) {
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    @GetMapping("/login")
+    public ResponseEntity<String> login(@RequestParam("userId") String userid,
+            @RequestParam("password") String password) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // 인증 성공 시 JWT 생성
         if (authentication != null && authentication.isAuthenticated()) {
-            String jwt = jwtTokenProvider.createToken(authentication.getName(), authentication.getAuthorities());
-            return ResponseEntity.ok(jwt); // 응답 객체에 토큰 포함
-        }
-
-        // 인증 실패 시 401 반환
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
-	}
-	
-    @PostMapping("/login2")
-    public ResponseEntity<?> login2() {
-        Authentication auth_info = SecurityContextHolder.getContext().getAuthentication();
-        log.info("auth_info:{}".formatted(auth_info.getName()));
-        // 인증 성공 시 JWT 생성
-        if (auth_info != null && auth_info.isAuthenticated()) {
-            String jwt = jwtTokenProvider.createToken(auth_info.getName(), auth_info.getAuthorities());
+            String jwt = jwtTokenProvider
+                .createToken(authentication.getName(), authentication.getAuthorities());
             return ResponseEntity.ok(jwt); // 응답 객체에 토큰 포함
         }
 
         // 인증 실패 시 401 반환
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
     }
-    
-    @PostMapping("/create-user")
-    public ResponseEntity<?> createUser(@RequestBody UserDTO userDTO) throws Exception {
-        userService.createArticle(userDTO);
-        return ResponseEntity.ok("OK");
+
+    @PostMapping("/login2")
+    public ResponseEntity<?> login2() {
+        Authentication auth_info = SecurityContextHolder.getContext().getAuthentication();
+        log.info("auth_info:{}".formatted(auth_info.getName()));
+        // 인증 성공 시 JWT 생성
+        if (auth_info != null && auth_info.isAuthenticated()) {
+            String jwt = jwtTokenProvider
+                .createToken(auth_info.getName(), auth_info.getAuthorities());
+            return ResponseEntity.ok(jwt); // 응답 객체에 토큰 포함
+        }
+
+        // 인증 실패 시 401 반환
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
     }
 
 }

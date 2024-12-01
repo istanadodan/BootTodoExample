@@ -8,9 +8,13 @@
         SELECT * FROM tb_user WHERE user_id = #{userId} ORDER BY id
     </select>
 
-    <insert id="insertBoard" parameterType="UserDTO">
+    <insert id="insertUser" parameterType="UserDTO">
         INSERT INTO tb_user (user_id,username,password,roles,reg_date,mod_date)
         VALUES (#{userId}, #{username}, #{password}, #{roles}, #{regDate}, #{modDate})    
     </insert>
+    
+    <select id="selectList" resultType="UserVO">
+        SELECT * FROM tb_user
+    </select>
     
 </mapper>

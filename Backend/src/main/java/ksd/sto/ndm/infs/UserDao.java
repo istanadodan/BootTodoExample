@@ -1,5 +1,6 @@
 package ksd.sto.ndm.infs;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -11,5 +12,7 @@ import ksd.sto.ndm.infs.vo.UserVO;
 public interface UserDao {
 	Optional<UserVO> findByUserId(String userId);
 
-    void insertBoard(UserDTO userDTO);
+    List<UserVO> selectList();
+
+    void insertUser(UserDTO userDTO);
 }

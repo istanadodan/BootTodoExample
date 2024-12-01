@@ -14,10 +14,14 @@ public class UserServiceImpl {
 
     private final UserDao userDao;
 
-    public void createArticle(UserDTO userDTO) {
-        userDao.insertBoard(userDTO);
+    public void createUser(UserDTO userDTO) {
+        userDao.insertUser(userDTO);
         if(true) {
 //            float i = 1/0;            
         }
+    }
+
+    public Object getListUser() {
+        return userDao.selectList();
     }
 }
