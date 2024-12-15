@@ -1,0 +1,25 @@
+server:
+  persistentVolume:
+    size: 10Gi
+  retention: 15d
+  global:
+    scrape_interval: 15s
+    evaluation_interval: 15s
+  extraFlags:
+    - web.enable-lifecycle
+    - storage.tsdb.no-lockfile
+
+alertmanager:
+  persistentVolume:
+    size: 2Gi
+
+nodeExporter:
+  tolerations:
+    - effect: NoSchedule
+      operator: Exists
+
+kubeStateMetrics:
+  enabled: true
+
+pushgateway:
+  enabled: true

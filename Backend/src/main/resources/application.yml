@@ -1,3 +1,6 @@
+api:
+  version: v1
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -17,11 +20,6 @@ spring:
       - file:/upload
       cache:
         period: 3600
-  devtools:
-    restart:
-      enabled: true
-    livereload:
-      enabled: true
 #  jpa:
 #    hibernate:
 #      ddl-auto: update
@@ -78,5 +76,19 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
-    operationsSorter: method
+    groups-order: DESC
+    tags-sorter: alpha
+    operations-sorter: method
+    disable-swagger-default-url: true
+    display-request-duration: true
+    default-model-expand-depth: 2
+    default-models-expand-depth: 2
+  show-actuator: false
+  show-spring-cloud-functions: false
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  writer-with-default-pretty-printer: true
+  model-and-view-allowed: true
+  paths-to-match:
+    - /**
       

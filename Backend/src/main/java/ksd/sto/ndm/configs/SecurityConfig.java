@@ -30,13 +30,15 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
             .sessionManagement(
                     session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/admin", "/api/**")
+            .authorizeHttpRequests(auth -> auth                    
+                .requestMatchers("/api/**")
                 .authenticated()
+                .requestMatchers("/*").permitAll()
                 .anyRequest()
-                .permitAll())
+                .authenticated())
             .formLogin(
-                    req -> req.loginPage("/login_admin.html").loginProcessingUrl("/inter-process")
+//                    req -> req.loginPage("/login").loginProcessingUrl("/inter-process")
+                    req -> req.loginPage("/login").permitAll()
             // .usernameParameter("userId")
             // .passwordParameter("password")
             )
@@ -56,7 +58,7 @@ public class SecurityConfig {
      */
     @Bean
     RoleHierarchy roleHierachy() {
-        return RoleHierarchyImpl.fromHierarchy("ROLE_ADMIN > ROLE_NP_MANAGE\nROLE_NA_MANAGER\nROLE_SYS_MANAGER > ROLE_USER");
+        return RoleHierarchyImpl.fromHierarchy("ROLE_ADMIN > ROLE_NP_MANAGE > ROLE_USER > ROLE_ANONYMOUS");
     }
 
     // @Bean

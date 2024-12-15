@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/board")
 @RequiredArgsConstructor
 public class BoardController {
 
@@ -34,7 +34,8 @@ public class BoardController {
 
     @GetMapping("/list")
     public List<BoardDTO> finaAll() {
-        return boardService.getAllBoardList();
+        List<BoardDTO> result = boardService.getAllBoardList();
+        return result;
     }
 
     @GetMapping("/")

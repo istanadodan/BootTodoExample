@@ -1,56 +1,56 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.3.5'
-	id 'io.spring.dependency-management' version '1.1.6'
-	id 'war'
+    id 'java'
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'war'
 }
 
 group = 'kr.or.ksd.sto'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 repositories {
-	//mavenCentral()
-	maven {
-		url "http://localhost:8081/repository/maven-public/"
-		allowInsecureProtocol = true
-	}
+    //mavenCentral()
+    maven {
+        url "http://localhost:8081/repository/maven-public/"
+        allowInsecureProtocol = true
+    }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-	implementation 'org.springframework.session:spring-session-core'	
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	//implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+    implementation 'org.springframework.session:spring-session-core'    
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    //implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-aop'  // AOP 지원을 위한 의존성
     implementation 'org.aspectj:aspectjweaver'  // AspectJ 기능을 위한 의존성
-	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'	
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'	
-	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
-	//implementation 'org.web3j:core:4.8.7'
-	//implementation 'org.hyperledger.fabric-sdk-java:fabric-sdk-java:2.2.5'
-	//implementation 'org.springframework.boot:spring-boot-starter-data-jpa'    
-	compileOnly 'org.projectlombok:lombok:1.18.0'
-	annotationProcessor 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	// mysql connector
-	runtimeOnly 'com.mysql:mysql-connector-j'
-	//runtimeOnly group: 'com.mysql', name: 'mysql-connector-j', version: '^1.0.0'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'	
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'  
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'    
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+    //implementation 'org.web3j:core:4.8.7'
+    //implementation 'org.hyperledger.fabric-sdk-java:fabric-sdk-java:2.2.5'
+    //implementation 'org.springframework.boot:spring-boot-starter-data-jpa'    
+    compileOnly 'org.projectlombok:lombok:1.18.0'
+    annotationProcessor 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    // mysql connector
+    runtimeOnly 'com.mysql:mysql-connector-j'
+    //runtimeOnly group: 'com.mysql', name: 'mysql-connector-j', version: '^1.0.0'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'    
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'	
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'   
 }
 
 //bootWar {
@@ -61,5 +61,5 @@ compileJava {
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    //useJUnitPlatform()
 }

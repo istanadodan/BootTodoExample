@@ -15,15 +15,15 @@ import ksd.sto.ndm.infs.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 
 
-@Service
+//@Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserDao usrDao;
 
     @Override
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        UserVO user = usrDao.findByUserId(userId)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserVO user = usrDao.findByUserId(username)
             .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         return new User(

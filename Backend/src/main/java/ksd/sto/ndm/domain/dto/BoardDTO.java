@@ -1,6 +1,6 @@
 package ksd.sto.ndm.domain.dto;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,6 +20,6 @@ public class BoardDTO {
 	private String boardContents;
 	private String boardWriter;
 	private int boardHits;
-	private LocalDateTime createdAt;
-	private LocalDateTime modifiedAt;
+	private Date createdAt;
+	private Date modifiedAt;
 }

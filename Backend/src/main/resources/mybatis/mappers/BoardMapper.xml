@@ -14,7 +14,7 @@
 </resultMap>
 
 <select id="getAllBoardList" resultType="BoardVO">
-    SELECT * FROM tb_board ORDER BY board_id DESC
+    SELECT * FROM tb_board ORDER BY board_id asc
 </select>
 
 </mapper>

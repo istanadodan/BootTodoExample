@@ -36,7 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                  */
                 Authentication authentication = tokenProvider.getAuthentication(accessToken);
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-
+                log.info("user role: %s".formatted(authentication.getAuthorities().toString()));
             } catch (JwtException e) {
                 // 만료된 JWT 토큰
                 throw new ServletException("토큰이 형식이 다르거나 유효하지 않음");
