@@ -13,6 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import ksd.sto.ndm.cmns.exceptions.AccessDeniedHandlerImpl;
+import ksd.sto.ndm.cmns.exceptions.AuthenticationEntryPointImpl;
+import ksd.sto.ndm.cmns.filters.LoggingFilter;
 import ksd.sto.ndm.cmns.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 
@@ -23,26 +26,37 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-
+    private final LoggingFilter loggingFilter;
+    private final AuthenticationEntryPointImpl authenticationEntryPointImpl;
+    private final AccessDeniedHandlerImpl accessDeniedHandlerImpl;
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
             .sessionManagement(
                     session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth                    
-                .requestMatchers("/api/**")
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/v3/**")
+                .permitAll()
+                .requestMatchers("/user/**")
                 .authenticated()
-                .requestMatchers("/*").permitAll()
-                .anyRequest()
-                .authenticated())
+            // .anyRequest()
+            // .authenticated()
+            )
             .formLogin(
-//                    req -> req.loginPage("/login").loginProcessingUrl("/inter-process")
-                    req -> req.loginPage("/login").permitAll()
+                    // req ->
+                    // req.loginPage("/login").loginProcessingUrl("/inter-process")
+                    // req -> req.loginPage("/login").permitAll()
+                    req -> req.disable()
             // .usernameParameter("userId")
             // .passwordParameter("password")
             )
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterAfter(loggingFilter, UsernamePasswordAuthenticationFilter.class)
+            .exceptionHandling(ex -> {
+                ex.authenticationEntryPoint(authenticationEntryPointImpl);
+                ex.accessDeniedHandler(accessDeniedHandlerImpl);   
+            });
 
         return http.build();
     }
@@ -54,11 +68,13 @@ public class SecurityConfig {
 
     /**
      * 계층구조에서 권한을 구분할 때 줄바꿈으로 분리.
+     * 
      * @return
      */
     @Bean
     RoleHierarchy roleHierachy() {
-        return RoleHierarchyImpl.fromHierarchy("ROLE_ADMIN > ROLE_NP_MANAGE > ROLE_USER > ROLE_ANONYMOUS");
+        return RoleHierarchyImpl
+            .fromHierarchy("ROLE_ADMIN > ROLE_NP_MANAGE > ROLE_USER > ROLE_ANONYMOUS");
     }
 
     // @Bean

@@ -15,7 +15,7 @@ import ksd.sto.ndm.infs.vo.UserVO;
 import lombok.RequiredArgsConstructor;
 
 
-//@Service
+@Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 

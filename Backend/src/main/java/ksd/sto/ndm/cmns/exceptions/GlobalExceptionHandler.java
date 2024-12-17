@@ -7,6 +7,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.client.HttpClientErrorException.Unauthorized;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -24,6 +25,12 @@ public class GlobalExceptionHandler {
     }
 
     // 403 Forbidden 에러 처리
+    @ExceptionHandler(Unauthorized.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ResponseEntity<String> UnauthorizedException(AccessDeniedException ex) {
+        return new ResponseEntity<>("Unauthorized: " + ex.getMessage(), HttpStatus.FORBIDDEN);
+    }
+    
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseEntity<String> handleAccessDeniedException(AccessDeniedException ex) {
