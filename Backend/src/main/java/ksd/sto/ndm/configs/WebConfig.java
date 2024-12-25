@@ -5,14 +5,25 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
-//        configurer
-//            // .setPatternParser(new PathPatternParser())
-//            .addPathPrefix("/api", c -> c.isAnnotationPresent(RestController.class));
+        configurer
+            // .setPatternParser(new PathPatternParser())
+            .addPathPrefix("/api", c -> {
+                log.info("simple name:{}", (c.getSimpleName().equals("AuthController") == false));
+//                return c.isAnnotationPresent(RestController.class)
+//                        && (c.getSimpleName().equals("AuthController") == false);
+//                if (c.getSimpleName().equals("AuthController") == true) {
+//                    return false;                    
+//                }
+                return false;
+            });
     }
     @Override
     public void addCorsMappings(CorsRegistry registry) {
