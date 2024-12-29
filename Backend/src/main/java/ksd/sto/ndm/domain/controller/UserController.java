@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import ksd.sto.ndm.cmns.ApiResponse;
 import ksd.sto.ndm.cmns.ContextService;
 import ksd.sto.ndm.domain.dto.UserDTO;
 import ksd.sto.ndm.domain.service.UserServiceImpl;
@@ -26,17 +27,17 @@ public class UserController {
     private final UserServiceImpl userService;
     private final ContextService contextService;
 
-    @Operation(security = {@SecurityRequirement(name = "bearerAuth")})
+//    @Operation(security = {@SecurityRequirement(name = "bearerAuth")})
     @GetMapping("/example")
-    public ResponseEntity<String> exampleEndpoint() {
+    public ApiResponse<Object> exampleEndpoint() {
         // API 로직
-        return ResponseEntity.ok("Hello");
+        return ApiResponse.builder().data("OK").build();
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO) throws Exception {
+    public String registerUser(@RequestBody UserDTO userDTO) throws Exception {
         userService.createUser(userDTO);
-        return ResponseEntity.ok("OK");
+        return "OK";
     }
     @PreAuthorize("hasAnyRole('ANONYMOUS')")
     @PostMapping("/list")

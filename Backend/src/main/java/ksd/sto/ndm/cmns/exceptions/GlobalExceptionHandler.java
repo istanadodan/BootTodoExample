@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import ksd.sto.ndm.cmns.ApiResponse;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -20,8 +20,9 @@ public class GlobalExceptionHandler {
     // BizException 처리
     @ExceptionHandler(BizException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<String> handleBizException(BizException ex) {
-        return new ResponseEntity<>("Business error: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
+    public ApiResponse<Object> handleBizException(BizException ex) {
+        String message = "Business error: " + ex.getMessage();
+        return createResponse("40401001", message, "bizType");
     }
 
     // 403 Forbidden 에러 처리
@@ -30,7 +31,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> UnauthorizedException(AccessDeniedException ex) {
         return new ResponseEntity<>("Unauthorized: " + ex.getMessage(), HttpStatus.FORBIDDEN);
     }
-    
+
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseEntity<String> handleAccessDeniedException(AccessDeniedException ex) {
@@ -40,24 +41,42 @@ public class GlobalExceptionHandler {
     // 405 Method Not Allowed 에러 처리
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public ResponseEntity<String> handleMethodNotAllowedException(HttpRequestMethodNotSupportedException ex) {
-        return new ResponseEntity<>("Method not allowed: " + ex.getMessage(), HttpStatus.METHOD_NOT_ALLOWED);
+    public ResponseEntity<String> handleMethodNotAllowedException(
+            HttpRequestMethodNotSupportedException ex) {
+        return new ResponseEntity<>("Method not allowed: " + ex.getMessage(),
+                HttpStatus.METHOD_NOT_ALLOWED);
     }
     // No Resource Found 에러 처리
     @ExceptionHandler(NoResourceFoundException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ModelAndView handleNoResourceFoundException(NoResourceFoundException ex, HttpServletRequest request) {
+    public ModelAndView handleNoResourceFoundException(NoResourceFoundException ex,
+            HttpServletRequest request) {
         ModelAndView mView = new ModelAndView("forward:/login");
         return mView;
-//        return new ResponseEntity<>("Method not allowed: " + ex.getMessage(), HttpStatus.BAD_REQUEST);
+        // return new ResponseEntity<>("Method not allowed: " + ex.getMessage(),
+        // HttpStatus.BAD_REQUEST);
     }
 
     // 일반 Exception 처리
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<String> handleGenericException(Exception ex) {
+    public ApiResponse<Object> handleGenericException(Exception ex) {
         ex.printStackTrace();
-        return new ResponseEntity<>("An unexpected error occurred: " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        var message = "An unexpected error occurred: " + ex.getMessage();
+        return createResponse("40401001", message, "system error");
     }
-    
+
+    /**
+     * 응답공통
+     * 
+     * @param 에러메시지객체
+     * @return 응답객체
+     */
+    private ApiResponse<Object> createResponse(String code, String msg, String type) {
+        return ApiResponse
+            .builder()
+            .error(ApiResponse.Error.builder().code(code).message(msg).type(type).build())
+            .build();
+    }
+
 }
