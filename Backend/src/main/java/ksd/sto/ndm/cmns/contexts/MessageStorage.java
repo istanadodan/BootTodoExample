@@ -1,4 +1,4 @@
-package ksd.sto.ndm.cmns;
+package ksd.sto.ndm.cmns.contexts;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

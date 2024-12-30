@@ -35,7 +35,8 @@ mybatis:
     map-underscore-to-camel-case: true
 
 jwt:
-  secret: szOh8kHoN6XnQnx+sFOQrEVgWKrH9NKiJidgxp0zXNY=
+  //secret: szOh8kHoN6XnQnx+sFOQrEVgWKrH9NKiJidgxp0zXNY=
+  secret: ksd-sto-mgr-ndmksd-sto-mgr-ndmksd-sto-mgr-ndm
   token-validity-in-seconds: 86400
 
 #########################

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import ksd.sto.ndm.cmns.ApiResponse;
-import ksd.sto.ndm.cmns.ContextService;
+import ksd.sto.ndm.cmns.contexts.ContextService;
 import ksd.sto.ndm.domain.dto.UserDTO;
 import ksd.sto.ndm.domain.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
