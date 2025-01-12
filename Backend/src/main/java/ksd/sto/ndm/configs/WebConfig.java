@@ -24,7 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
                 // if (c.getSimpleName().equals("AuthController") == true) {
                 // return false;
                 // }
-                return false;
+                return true;
             });
     }
     @Override

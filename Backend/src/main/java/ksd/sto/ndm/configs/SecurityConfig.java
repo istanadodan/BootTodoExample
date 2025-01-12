@@ -28,7 +28,7 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final LoggingFilter loggingFilter;
     private final AuthenticationEntryPointImpl authenticationEntryPointImpl;
-//    private final AccessDeniedHandlerImpl accessDeniedHandlerImpl;
+
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -36,7 +36,7 @@ public class SecurityConfig {
             .sessionManagement(
                     session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/**").authenticated()
+//                .requestMatchers("/api/**").authenticated()
                 .anyRequest().permitAll())
             .formLogin(
                     // req ->

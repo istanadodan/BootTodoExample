@@ -16,9 +16,9 @@ minikube start `
 # --network minikube `
 
 #istio 설치
-istioctl install --set profile=demo
+#istioctl install --set profile=demo
 
-kubectl label ns default istio-injection=enabled 
+#kubectl label ns default istio-injection=enabled 
 
 # docker image
 minikube image load mysql
@@ -40,11 +40,11 @@ ForEach ($directory in $manifestDirectory) {
   }
 }
 
-cd "D:\works\react-project\docker\sh"
+#cd "D:\works\react-project\docker\sh"
 # db 설정
 # .\db_secrets.bat
 # .\registry_auth.bat
 # mnt 설정
-.\bg_jobs.ps1
+# .\bg_jobs.ps1
 
 Write-Host "All manifest files from both directories applied successfully."

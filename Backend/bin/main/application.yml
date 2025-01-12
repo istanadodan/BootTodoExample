@@ -20,6 +20,8 @@ spring:
       - file:/upload
       cache:
         period: 3600
+  mvc.async.request-timeout: 60000
+    
 #  jpa:
 #    hibernate:
 #      ddl-auto: update

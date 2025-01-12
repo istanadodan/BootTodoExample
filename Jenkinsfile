@@ -15,7 +15,7 @@ pipeline {
         DOCKER_BOOT_IMAGE = 'local-registry:5000/boot'
         DOCKER_REAC_IMAGE = 'local-registry:5000/react'
         DOCKER_REGISTRY = 'http://local-registry:5000/'
-        DOCKER_CREDENTIALS = 'local-docker'
+        DOCKER_CREDENTIALS = 'local-registry-cred'
     }
     tools {
         gradle 'gradle-tools'
@@ -76,23 +76,23 @@ pipeline {
             steps {                
                     script {
                         docker.withServer('unix:///var/run/docker.sock') {
-                        // docker.withRegistry(DOCKER_REGISTRY, credentials(DOCKER_CREDENTIALS)) {
-                        docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
-                            // 빌드
-                            def app = docker.build(DOCKER_REAC_IMAGE, '-f ./docker/Dockerfile-fe .')
-                            // 배포
-                            // app.inside {
-                            //     sh 'cp -r ./Frontend/build/* /usr/share/nginx/html/'
-                            // }
-                            //  // 컨테이너 내부에서 파일 복사 작업 수행
-                            // app.withRun { container ->
-                            //     // Frontend 빌드 결과물을 Nginx 폴더로 복사
-                            //     sh "docker exec ${container.id} cp -r ./Frontend/build/* /usr/share/nginx/html/"
-                            // }
-                            // docker hub에 등록
-                            app.push()
+                            // docker.withRegistry(DOCKER_REGISTRY, credentials(DOCKER_CREDENTIALS)) {
+                            docker.withRegistry(DOCKER_REGISTRY, DOCKER_CREDENTIALS) {
+                                // 빌드
+                                def app = docker.build(DOCKER_REAC_IMAGE, '-f ./docker/Dockerfile-fe .')
+                                // 배포
+                                // app.inside {
+                                //     sh 'cp -r ./Frontend/build/* /usr/share/nginx/html/'
+                                // }
+                                //  // 컨테이너 내부에서 파일 복사 작업 수행
+                                // app.withRun { container ->
+                                //     // Frontend 빌드 결과물을 Nginx 폴더로 복사
+                                //     sh "docker exec ${container.id} cp -r ./Frontend/build/* /usr/share/nginx/html/"
+                                // }
+                                // docker hub에 등록
+                                app.push()
+                            }
                         }
-                    }
                 }
             }
         }

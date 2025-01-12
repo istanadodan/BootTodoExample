@@ -1,4 +1,7 @@
-package ksd.sto.ndm.configs;
+package ksd.sto.ndm.cmns;
+
+import java.util.LinkedHashMap;
+import java.util.TreeMap;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -11,12 +14,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ksd.sto.ndm.cmns.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ControllerAdvice
-public class CustomResponseBodyAdvice implements ResponseBodyAdvice<Object> {
+public class GlobalApiResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter returnType,
@@ -31,8 +33,8 @@ public class CustomResponseBodyAdvice implements ResponseBodyAdvice<Object> {
             ServerHttpRequest request, ServerHttpResponse response) {
         // 응답 수정 로직
         log.info("request: {}", body.getClass().toString());
-        if (body instanceof ApiResponse b) {
-            return b;
+        if (body instanceof ApiResponse) {
+            return body;
         } else if (body instanceof String) {
             // ObjectMapper를 사용하여 직접 JSON 문자열로 변환
             ObjectMapper objectMapper = new ObjectMapper();
@@ -41,6 +43,20 @@ public class CustomResponseBodyAdvice implements ResponseBodyAdvice<Object> {
             } catch (JsonProcessingException e) {
                 throw new RuntimeException("JSON processing failed", e);
             }
+        } else if (request.getURI().getPath().contains("/api/v3/api-docs")) {
+            return body;
+            
+        } else if (body instanceof LinkedHashMap) {
+            @SuppressWarnings("unchecked")
+            LinkedHashMap<String, String> errMap = (LinkedHashMap<String, String>) body;
+            return ApiResponse
+                .builder()
+                .error(ApiResponse.Error
+                    .builder()
+                    .code("500")
+                    .message(errMap.get("message"))
+                    .type("security")
+                    .build());
         }
 
         return ApiResponse.<Object>builder().data(body).build();
