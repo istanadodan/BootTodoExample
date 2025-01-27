@@ -2,6 +2,7 @@ package ksd.sto.ndm.configs;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.NonNull;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
@@ -19,12 +20,12 @@ public class WebConfig implements WebMvcConfigurer {
             // .setPatternParser(new PathPatternParser())
             .addPathPrefix("/api", c -> {
                 log.info("simple name:{}", (c.getSimpleName().equals("AuthController") == false));
-                // return c.isAnnotationPresent(RestController.class)
+                 return c.isAnnotationPresent(RestController.class);
                 // && (c.getSimpleName().equals("AuthController") == false);
                 // if (c.getSimpleName().equals("AuthController") == true) {
                 // return false;
                 // }
-                return true;
+//                return true;
             });
     }
     @Override

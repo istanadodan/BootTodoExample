@@ -1,3 +1,5 @@
+**/.gradle/
+**/.settings/
 **/build/
 **/node_modules/
 /.metadata/
@@ -5,6 +7,5 @@
 Frontendkk
 .dockerignore
 .gitignore
-
 *.class
 *.zip

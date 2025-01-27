@@ -30,7 +30,7 @@ spec:
       # serviceAccountName: jenkins-admin
       containers:
       - name: jenkins
-        image: jenkins
+        image: local-registry:5000/jenkins/jenkins
         imagePullPolicy: IfNotPresent
         # env:
         # - name: JENKINS_URL

@@ -35,6 +35,7 @@ public class AuthController {
     }
 
     @GetMapping("/login")
+    @Operation(description = "로그인처리")
     public ResponseEntity<String> login(@RequestParam("userId") String userid,
             @RequestParam("password") String password) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -51,6 +52,7 @@ public class AuthController {
     }
 
     @PostMapping("/login2")
+    @Operation(summary = "로그인처리", description = "로그인처리")
     public ResponseEntity<?> login2() {
         Authentication auth_info = SecurityContextHolder.getContext().getAuthentication();
         log.info("auth_info:{}".formatted(auth_info.getName()));
