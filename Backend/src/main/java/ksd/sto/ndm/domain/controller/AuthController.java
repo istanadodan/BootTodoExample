@@ -14,7 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import ksd.sto.ndm.cmns.exceptions.BizException;
 import ksd.sto.ndm.cmns.security.JwtTokenProvider;
+import ksd.sto.ndm.domain.dto.UserDTO;
+import ksd.sto.ndm.domain.dto.UserOutDTO;
 import ksd.sto.ndm.domain.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,20 +38,23 @@ public class AuthController {
     }
 
     @GetMapping("/login")
-    @Operation(description = "로그인처리")
-    public ResponseEntity<String> login(@RequestParam("userId") String userid,
-            @RequestParam("password") String password) {
+    @Operation(summary = "로그인처리", description = "로그인처리")
+    public UserOutDTO login(@RequestParam("userId") String userId,
+            @RequestParam("password") String password) throws BizException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         // 인증 성공 시 JWT 생성
-        if (authentication != null && authentication.isAuthenticated()) {
-            SimpleGrantedAuthority admin_role = new SimpleGrantedAuthority("ROLE_ADMIN");
-            String jwt = jwtTokenProvider
-                .createToken(authentication.getName(), List.of(admin_role));
-            return ResponseEntity.ok(jwt); // 응답 객체에 토큰 포함
+        if (authentication == null || authentication.isAuthenticated() == false) {
+            throw new BizException("Authentication failed");
         }
 
+        SimpleGrantedAuthority admin_role = new SimpleGrantedAuthority("ROLE_ADMIN");
+        String jwt = jwtTokenProvider.createToken(userId, List.of(admin_role));
+
+        // 사용자 정보
+        UserDTO user = userService.getUserById(userId);
+
         // 인증 실패 시 401 반환
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+        return UserOutDTO.builder().user(user).accessToken(jwt).build();
     }
 
     @PostMapping("/login2")

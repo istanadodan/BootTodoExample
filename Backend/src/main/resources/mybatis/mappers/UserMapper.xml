@@ -17,4 +17,9 @@
         SELECT * FROM tb_user
     </select>
     
+    <select id="selectUserBy" resultType="UserVO">
+        SELECT * FROM tb_user
+        where user_id = #{userId}
+    </select>
+    
 </mapper>

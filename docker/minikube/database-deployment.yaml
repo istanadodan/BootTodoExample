@@ -24,7 +24,7 @@ spec:
       #     mountPath: /var/lib/mysql
       containers:
       - name: mysql-db
-        image: docker.io/library/mysql:latest
+        image: local-registry:5000/docker.io/mysql
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 3306

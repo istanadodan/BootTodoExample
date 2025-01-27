@@ -37,7 +37,6 @@ mybatis:
     map-underscore-to-camel-case: true
 
 jwt:
-  //secret: szOh8kHoN6XnQnx+sFOQrEVgWKrH9NKiJidgxp0zXNY=
   secret: ksd-sto-mgr-ndmksd-sto-mgr-ndmksd-sto-mgr-ndm
   token-validity-in-seconds: 86400
 
@@ -47,8 +46,8 @@ jwt:
 logging:
   level:
     root: INFO
-    org.mybatis: TRACE
-    kr.or.ksd.sto: DEBUG
+    org.mybatis: DEBUG
+    ksd.sto.ndm: INFO
   jdbc:
     sqlonly: DEBUG
   file:
@@ -71,9 +70,9 @@ server:
       charset: UTF-8
       force: true
 
-#################
-##### swagger 설정
-################
+###################
+### swagger 설정
+###################
 springdoc:
   api-docs:
     path: /v3/api-docs
@@ -86,12 +85,20 @@ springdoc:
     display-request-duration: true
     default-model-expand-depth: 2
     default-models-expand-depth: 2
-  show-actuator: false
-  show-spring-cloud-functions: false
+  show-actuator: true
+  show-spring-cloud-functions: true
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
   writer-with-default-pretty-printer: true
-  model-and-view-allowed: true
+  model-and-view-allowed: false
   paths-to-match:
     - /**
+    
+#################
+## Actuator
+#################
+management:
+  endpoints:
+    web:
+      base-path: /actuator
       

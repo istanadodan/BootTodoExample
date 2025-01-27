@@ -47,15 +47,14 @@ public class GlobalExceptionHandler {
                 HttpStatus.METHOD_NOT_ALLOWED);
     }
     // No Resource Found 에러 처리
-    @ExceptionHandler(NoResourceFoundException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ModelAndView handleNoResourceFoundException(NoResourceFoundException ex,
-            HttpServletRequest request) {
-        ModelAndView mView = new ModelAndView("forward:/login");
-        return mView;
-        // return new ResponseEntity<>("Method not allowed: " + ex.getMessage(),
-        // HttpStatus.BAD_REQUEST);
-    }
+//    @ExceptionHandler(NoResourceFoundException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public ResponseEntity<String> handleNoResourceFoundException(NoResourceFoundException ex,
+//            HttpServletRequest request) {
+//        ModelAndView mView = new ModelAndView("forward:/login");
+////        return mView;
+//         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+//    }
 
     // 일반 Exception 처리
     @ExceptionHandler(Exception.class)

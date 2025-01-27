@@ -24,7 +24,7 @@ spec:
       - name: frontend
         # image: docker0now/react:latest
         # image: host.minikube.internal:5000/react:latest
-        image: local-registry:5001/react:latest
+        image: local-registry:5000/react:latest
         # image: nginx:latest
         # imagePullPolicy: IfNotPresent
         imagePullPolicy: Always

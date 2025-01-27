@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ControllerAdvice
-public class GlobalApiResponseBodyAdvice implements ResponseBodyAdvice<Object> {
+public class GlobalResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter returnType,
@@ -33,8 +33,11 @@ public class GlobalApiResponseBodyAdvice implements ResponseBodyAdvice<Object> {
             ServerHttpRequest request, ServerHttpResponse response) {
         // 응답 수정 로직
         log.info("request: {}", body.getClass().toString());
-        if (body instanceof ApiResponse) {
+
+        if (body instanceof ApiResponse
+                || request.getURI().getPath().contains("/api/v3/api-docs")) {
             return body;
+
         } else if (body instanceof String) {
             // ObjectMapper를 사용하여 직접 JSON 문자열로 변환
             ObjectMapper objectMapper = new ObjectMapper();
@@ -43,12 +46,12 @@ public class GlobalApiResponseBodyAdvice implements ResponseBodyAdvice<Object> {
             } catch (JsonProcessingException e) {
                 throw new RuntimeException("JSON processing failed", e);
             }
-        } else if (request.getURI().getPath().contains("/api/v3/api-docs")) {
-            return body;
-            
+
         } else if (body instanceof LinkedHashMap) {
+            // 인증처리중 오류
             @SuppressWarnings("unchecked")
             LinkedHashMap<String, String> errMap = (LinkedHashMap<String, String>) body;
+            if (errMap.containsKey("_links")) { return body; }
             return ApiResponse
                 .builder()
                 .error(ApiResponse.Error

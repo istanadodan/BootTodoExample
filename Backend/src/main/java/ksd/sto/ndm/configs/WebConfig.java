@@ -19,13 +19,8 @@ public class WebConfig implements WebMvcConfigurer {
         configurer
             // .setPatternParser(new PathPatternParser())
             .addPathPrefix("/api", c -> {
-                log.info("simple name:{}", (c.getSimpleName().equals("AuthController") == false));
+                //log.info("simple name:{}", (c.getSimpleName().equals("AuthController") == false));
                  return c.isAnnotationPresent(RestController.class);
-                // && (c.getSimpleName().equals("AuthController") == false);
-                // if (c.getSimpleName().equals("AuthController") == true) {
-                // return false;
-                // }
-//                return true;
             });
     }
     @Override
