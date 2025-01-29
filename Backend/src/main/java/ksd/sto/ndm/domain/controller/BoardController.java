@@ -23,14 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardController {
 
     private final BoardService boardService;
-//    private final JwtTokenProvider tokenProvider;
 
-    @Operation(security = {@SecurityRequirement(name = "bearerAuth")})
-    @GetMapping("/example")
-    public ResponseEntity<String> exampleEndpoint() {
-        // API 로직
-        return ResponseEntity.ok("Hello");
-    }
 
     @GetMapping("/list")
     public List<BoardDTO> finaAll() {

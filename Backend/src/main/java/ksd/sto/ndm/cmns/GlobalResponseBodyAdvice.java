@@ -34,11 +34,13 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice<Object> {
         // 응답 수정 로직
         log.info("request: {}", body.getClass().toString());
 
-        if (body instanceof ApiResponse
-                || request.getURI().getPath().contains("/api/v3/api-docs")) {
+        if (body instanceof ApiResponse || request.getURI().getPath().contains("/v3/api-docs")
+                || request.getURI().getPath().contains("/actuator")) {
+            //오류, 스웨거, monitoring
             return body;
 
         } else if (body instanceof String) {
+            log.info("String request: {}", body.toString());
             // ObjectMapper를 사용하여 직접 JSON 문자열로 변환
             ObjectMapper objectMapper = new ObjectMapper();
             try {
@@ -52,14 +54,14 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice<Object> {
             @SuppressWarnings("unchecked")
             LinkedHashMap<String, String> errMap = (LinkedHashMap<String, String>) body;
             if (errMap.containsKey("_links")) { return body; }
+            
+            ApiResponse.Error error = new ApiResponse.Error();
+            error.setCode("500");
+            error.setMessage(errMap.get("message"));
+            error.setType("security");
             return ApiResponse
                 .builder()
-                .error(ApiResponse.Error
-                    .builder()
-                    .code("500")
-                    .message(errMap.get("message"))
-                    .type("security")
-                    .build());
+                .error(error);
         }
 
         return ApiResponse.<Object>builder().data(body).build();

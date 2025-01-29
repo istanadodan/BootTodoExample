@@ -47,20 +47,24 @@ public class GlobalExceptionHandler {
                 HttpStatus.METHOD_NOT_ALLOWED);
     }
     // No Resource Found 에러 처리
-//    @ExceptionHandler(NoResourceFoundException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public ResponseEntity<String> handleNoResourceFoundException(NoResourceFoundException ex,
-//            HttpServletRequest request) {
+    @ExceptionHandler(NoResourceFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Object handleNoResourceFoundException(NoResourceFoundException ex,
+            HttpServletRequest request) throws Exception {
 //        ModelAndView mView = new ModelAndView("forward:/login");
-////        return mView;
-//         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
-//    }
+        // return mView;
+//        if(request.getRequestURL().toString().contains("/actuator") == true) {
+//            return "index";
+//        }
+        return "/error.html";
+//        return createResponse("40401001", ex.getMessage(), "system error");
+    }
 
     // 일반 Exception 처리
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiResponse<Object> handleGenericException(Exception ex) {
-        ex.printStackTrace();
+        // ex.printStackTrace();
         var message = "An unexpected error occurred: " + ex.getMessage();
         return createResponse("40401001", message, "system error");
     }
@@ -72,10 +76,11 @@ public class GlobalExceptionHandler {
      * @return 응답객체
      */
     private ApiResponse<Object> createResponse(String code, String msg, String type) {
-        return ApiResponse
-            .builder()
-            .error(ApiResponse.Error.builder().code(code).message(msg).type(type).build())
-            .build();
+        ApiResponse.Error error = new ApiResponse.Error();
+        error.setCode(code);
+        error.setMessage(msg);
+        error.setType(type);
+        return ApiResponse.builder().error(error).build();
     }
 
 }

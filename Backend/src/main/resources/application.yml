@@ -16,8 +16,7 @@ spring:
   web:
     resources:
       static-locations:
-      - classpath:/public
-      - file:/upload
+      - classpath:/public/
       cache:
         period: 3600
   mvc.async.request-timeout: 60000
@@ -46,7 +45,7 @@ jwt:
 logging:
   level:
     root: INFO
-    org.mybatis: DEBUG
+    org.mybatis: INFO
     ksd.sto.ndm: INFO
   jdbc:
     sqlonly: DEBUG
@@ -90,7 +89,7 @@ springdoc:
   default-consumes-media-type: application/json
   default-produces-media-type: application/json
   writer-with-default-pretty-printer: true
-  model-and-view-allowed: false
+  model-and-view-allowed: true
   paths-to-match:
     - /**
     
@@ -101,4 +100,5 @@ management:
   endpoints:
     web:
       base-path: /actuator
-      
+      exposure:
+        include: health,metrics,prometheus

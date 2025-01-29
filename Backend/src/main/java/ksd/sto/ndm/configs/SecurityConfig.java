@@ -26,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
-    private final LoggingFilter loggingFilter;
+//    private final LoggingFilter loggingFilter;
     private final AuthenticationEntryPointImpl authenticationEntryPointImpl;
 
     @Bean
@@ -47,7 +47,7 @@ public class SecurityConfig {
             // .passwordParameter("password")
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-            .addFilterAfter(loggingFilter, UsernamePasswordAuthenticationFilter.class)
+//            .addFilterAfter(loggingFilter, UsernamePasswordAuthenticationFilter.class)
             .exceptionHandling(ex -> {
                 ex.authenticationEntryPoint(authenticationEntryPointImpl);
 //                ex.accessDeniedHandler(accessDeniedHandlerImpl);

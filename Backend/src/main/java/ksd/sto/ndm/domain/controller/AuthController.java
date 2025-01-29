@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,16 +26,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/")
 public class AuthController {
 
     private final JwtTokenProvider jwtTokenProvider;
     private final UserServiceImpl userService;
 
     @Operation(security = {@SecurityRequirement(name = "bearerAuth")})
-    @GetMapping("/example")
+    @GetMapping("/error")
     public ResponseEntity<String> exampleEndpoint() {
         // API 로직
-        return ResponseEntity.ok("Hello");
+        return ResponseEntity.ok("error");
     }
 
     @GetMapping("/login")

@@ -51,8 +51,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'    
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.3'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'   
-    
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.3'    
     implementation 'io.prometheus:prometheus-metrics-core:1.1.0'
     implementation 'io.prometheus:prometheus-metrics-instrumentation-jvm:1.1.0'
     implementation 'io.prometheus:prometheus-metrics-exporter-httpserver:1.1.0'

@@ -9,19 +9,23 @@ import org.springframework.stereotype.Component;
 public class MessageInitializer implements CommandLineRunner {
     @Autowired
     private MessageStorage messageStorage;
-    
+
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @Override
     public void run(String... args) throws Exception {
-        String sql = "SELECT code, message FROM tb_message";
-        jdbcTemplate.query(sql, (rs, rowNum) -> {
-            String code = rs.getString("code");
-            String message = rs.getString("message");
-            messageStorage.addMessage(code, message);
-            return null;
-        });
+        try {
+            String sql = "SELECT code, message FROM tb_message";
+            jdbcTemplate.query(sql, (rs, rowNum) -> {
+                String code = rs.getString("code");
+                String message = rs.getString("message");
+                messageStorage.addMessage(code, message);
+                return null;
+            });
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+
     }
 }
-

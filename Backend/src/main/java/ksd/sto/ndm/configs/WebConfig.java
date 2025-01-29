@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import lombok.extern.slf4j.Slf4j;
@@ -14,15 +15,19 @@ import lombok.extern.slf4j.Slf4j;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Override
-    public void configurePathMatch(@NonNull PathMatchConfigurer configurer) {
-        configurer
-            // .setPatternParser(new PathPatternParser())
-            .addPathPrefix("/api", c -> {
-                //log.info("simple name:{}", (c.getSimpleName().equals("AuthController") == false));
-                 return c.isAnnotationPresent(RestController.class);
-            });
-    }
+//    @Override
+//    public void configurePathMatch(@NonNull PathMatchConfigurer configurer) {
+//        configurer
+//            // .setPatternParser(new PathPatternParser())
+//            .addPathPrefix("/api", c -> {
+//                //log.info("simple name:{}", (c.getSimpleName().equals("AuthController") == false));
+//                 return c.isAnnotationPresent(RestController.class);
+//            });
+//    }
+//    @Override
+//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+//        registry.addResourceHandler("/favicon.ico").addResourceLocations("classpath:/public/");
+//    }
     @Override
     public void addCorsMappings(@NonNull CorsRegistry registry) {
         registry
