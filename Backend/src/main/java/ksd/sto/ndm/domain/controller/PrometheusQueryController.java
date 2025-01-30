@@ -27,9 +27,9 @@ public class PrometheusQueryController {
         JsonNode jsonObj;
         try {
             jsonObj = mapper.readTree(response.getBody());
-            JsonNode result = jsonObj.get("data").get("result");
-            return result.get(0).asText();
-//            return mapper.writeValueAsString(jsonObj.get("data").get("result"));
+            JsonNode result = jsonObj.get("data").get("result").get(0);
+//            return result.get(0).asText();
+            return mapper.writeValueAsString(result);
             
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
