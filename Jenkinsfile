@@ -20,7 +20,6 @@ pipeline {
     tools {
         gradle 'gradle-tools'
         nodejs 'nodejs-tools'
-        git 'git-tools'
     }
     stages {
         stage('Checkout') {
