@@ -19,7 +19,7 @@ pipeline {
     }
     tools {
         gradle 'gradle-tools'
-        // nodejs 'nodejs-tools'
+        nodejs 'nodejs-tools'
     }
     stages {
         stage('Checkout') {
