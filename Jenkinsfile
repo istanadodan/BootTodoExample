@@ -15,17 +15,21 @@ pipeline {
         DOCKER_BOOT_IMAGE = 'local-registry:5000/boot'
         DOCKER_REAC_IMAGE = 'local-registry:5000/react'
         DOCKER_REGISTRY = 'http://local-registry:5000/'
-        DOCKER_CREDENTIALS = 'local-registry-cred'
+        DOCKER_CREDENTIALS = 'local-docker-registry'
     }
     tools {
         gradle 'gradle-tools'
         nodejs 'nodejs-tools'
+        git 'git-tools'
     }
     stages {
         stage('Checkout') {
             steps {
-                // Git 저장소에서 코드를 체크아웃
-                git url: 'https://github.com/istanadodan/BootTodoExample.git', branch: 'main'
+                    // Git 저장소에서 코드를 체크아웃
+                    git url: branch: 'main',
+                        url: 'https://github.com/istanadodan/BootTodoExample.git', 
+                        credentialsId: 'git-credential'
+                }                
             }
         }
         stage('Build frontend') {
@@ -37,7 +41,6 @@ pipeline {
                 dir('Frontend') {
                     nodejs(nodeJSInstallationName: 'nodejs-tools') {                                                
                         sh 'npm install -g typescript'
-                        sh 'npm install'
                         sh 'npm run build'
                         // 빌드 실행
                         // sh 'npm run build'
