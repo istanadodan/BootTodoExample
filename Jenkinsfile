@@ -26,7 +26,7 @@ pipeline {
         stage('Checkout') {
             steps {
                     // Git 저장소에서 코드를 체크아웃
-                    git url: branch: 'main',
+                    git branch: 'main',
                         url: 'https://github.com/istanadodan/BootTodoExample.git', 
                         credentialsId: 'git-credential'
                 }                
