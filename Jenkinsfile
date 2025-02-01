@@ -29,9 +29,8 @@ pipeline {
                     git branch: 'main',
                         url: 'https://github.com/istanadodan/BootTodoExample.git', 
                         credentialsId: 'git-credential'
-                }                
-            }
-        }
+            }                
+        }        
         stage('Build frontend') {
             // when {
             //     changeset "frontend/**"
