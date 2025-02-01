@@ -35,10 +35,10 @@ pipeline {
             steps {
                 // A 폴더로 이동하여 빌드 실행
                 dir('Frontend') {
-                    nodejs {                                                
-                        npm install -g typescript
-                        npm install
-                        npm run build
+                    nodejs(nodeJSInstallationName: 'nodejs-tools') {                                                
+                        sh 'npm install -g typescript'
+                        sh 'npm install'
+                        sh 'npm run build'
                         // 빌드 실행
                         // sh 'npm run build'
                     }
