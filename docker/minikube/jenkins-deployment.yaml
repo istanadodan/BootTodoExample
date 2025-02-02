@@ -15,14 +15,16 @@ spec:
       securityContext:
           runAsGroup: 0
       initContainers:
-      # - name: init-chown-docker
-      #   image: alpine
-      #   command: ['sh', '-c', 'apk add shadow; getent group docker || groupadd docker; chown :docker /var/run/docker.sock && chmod 660 /var/run/docker.sock']
-      #   volumeMounts:        
-      - name: init-jenkins
+      - name: init-chown-docker
         image: alpine
-        # command: ['sh', '-c', 'chown :999 /var/run/docker.sock; chmod 660 /var/run/docker.sock; chmod -R 777 /var/jenkins_home']
-        command: ['sh', '-c', 'chown :docker /var/run/docker.sock']
+        command: ['sh', '-c', 'apk add --no-cache shadow; addgroup -g 999 docker; add user jenkins docker']
+      # volumeMounts:        
+      # - name: init-jenkins
+      #   image: alpine
+      #   # command: ['sh', '-c', 'chown :999 /var/run/docker.sock; chmod 660 /var/run/docker.sock; chmod -R 777 /var/jenkins_home']
+      #   command: ['sh', '-c', 'chown :docker /var/run/docker.sock']
+        securityContext:
+            runAsUser: 0
         volumeMounts:
           - name: docker-sock
             mountPath: /var/run/docker.sock
