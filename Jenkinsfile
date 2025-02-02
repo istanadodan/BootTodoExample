@@ -20,6 +20,7 @@ pipeline {
     tools {
         gradle 'gradle-tools'
         nodejs 'nodejs-tools'
+        docker 'docker-tools'
     }
     stages {
         stage('Checkout') {
@@ -27,7 +28,7 @@ pipeline {
                     // Git 저장소에서 코드를 체크아웃
                     git branch: 'main',
                         url: 'https://github.com/istanadodan/BootTodoExample.git', 
-                        credentialsId: 'git-credential'
+                        credentialsId: 'github-cred'
             }                
         }        
         stage('Build frontend') {
