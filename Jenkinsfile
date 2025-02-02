@@ -27,7 +27,7 @@ pipeline {
                     // Git 저장소에서 코드를 체크아웃
                     git branch: 'main',
                         url: 'https://github.com/istanadodan/BootTodoExample.git', 
-                        credentialsId: 'github-cred'
+                        credentialsId: 'git-credential'
             }                
         }        
         stage('Build frontend') {
