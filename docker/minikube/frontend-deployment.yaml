@@ -22,14 +22,12 @@ spec:
       #     mountPath: /app    
       containers:
       - name: frontend
-        # image: docker0now/react:latest
         # image: host.minikube.internal:5000/react:latest
         image: local-registry:5000/react:latest
-        # image: nginx:latest
-        # imagePullPolicy: IfNotPresent
         imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - name: http        
+          containerPort: 80
         volumeMounts:
         - name: app-volume
           mountPath: /usr/share/nginx/html
@@ -37,7 +35,7 @@ spec:
         securityContext:
           runAsGroup: 0
       imagePullSecrets:
-      - name: regcred
+      - name: local-registry-secret
       volumes:
       - name: app-volume
         persistentVolumeClaim:

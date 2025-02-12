@@ -12,28 +12,29 @@ spec:
       labels:
         app: jenkins
     spec:
-      securityContext:
-          runAsGroup: 0
-      initContainers:
-      - name: init-chown-docker
-        image: alpine
-        command: ['sh', '-c', 'apk add --no-cache shadow; addgroup -g 999 docker; add user jenkins docker']
-      # volumeMounts:        
-      # - name: init-jenkins
+      securityContext:          
+        runAsUser: 0
+      # initContainers:
+      # - name: init-chown-docker
       #   image: alpine
-      #   # command: ['sh', '-c', 'chown :999 /var/run/docker.sock; chmod 660 /var/run/docker.sock; chmod -R 777 /var/jenkins_home']
-      #   command: ['sh', '-c', 'chown :docker /var/run/docker.sock']
-        securityContext:
-            runAsUser: 0
-        volumeMounts:
-          - name: docker-sock
-            mountPath: /var/run/docker.sock
+      #   command: ['sh', '-c', 'apk add --no-cache shadow; addgroup -g 999 docker; add user jenkins docker']
+      # # - name: init-jenkins
+      # #   image: alpine
+      # #   # command: ['sh', '-c', 'chown :999 /var/run/docker.sock; chmod 660 /var/run/docker.sock; chmod -R 777 /var/jenkins_home']
+      # #   command: ['sh', '-c', 'chown :docker /var/run/docker.sock']
+      #   securityContext:
+      #       runAsUser: 0
+      #   volumeMounts:
+      #     - name: docker-sock
+      #       mountPath: /var/run/docker.sock
       # serviceAccountName: jenkins-admin
       containers:
       - name: jenkins
         image: local-registry:5000/jenkins/jenkins
-        imagePullPolicy: IfNotPresent
-        # env:
+        # imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
+        env:
+        # env
         # - name: JENKINS_URL
         #   value: http://localhost:8080/jenkins/
         resources:
@@ -44,11 +45,12 @@ spec:
             memory: "500Mi"
             cpu: "500m"
         securityContext:
+            runAsUser: 0
             runAsGroup: 0
         ports:
-          - name: httpport
+          - name: http-port
             containerPort: 8080
-          - name: jnlpport
+          - name: jnlp-port
             containerPort: 50000
         # livenessProbe:
         #   httpGet:

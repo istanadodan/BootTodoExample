@@ -1,0 +1,18 @@
+name: prometheus
+services:  
+  node-exporter:
+    image: alpine
+    container_name: node-exporter
+    ports:
+      - 9180:9180
+    command: >
+      sh -c "
+      apk add --no-cache wget tar && \
+      wget https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz && \
+      tar -xvf node_exporter-1.7.0.linux-amd64.tar.gz && \            
+      mkdir -p /usr/local/node_exporter && \
+      mv ./node_exporter-1.7.0.linux-amd64/* /usr/local/node_exporter && \
+      rm node_exporter-1.7.0.linux-amd64.tar.gz && \
+      rmdir node_exporter-1.7.0.linux-amd64 && \
+      cd /usr/local/node_exporter/ && \
+      ./node_exporter --web.listen-address=:9180"

@@ -6,7 +6,6 @@ minikube start `
 --cpus=4 `
 --driver docker `
 --insecure-registry "local-registry:5000" `
---insecure-registry "local-registry:5001" `
 --mount-string="D:\.data\minikube:/mnt/host" `
 --mount
 #--docker-opt  "group=1000" `
@@ -21,8 +20,8 @@ minikube start `
 #kubectl label ns default istio-injection=enabled 
 
 # docker image
-minikube image load mysql
-minikube image load jenkins
+#minikube image load mysql
+#minikube image load jenkins
 
 $manifestDirectory = @(
   "D:\works\react-project\docker\minikube\init"
