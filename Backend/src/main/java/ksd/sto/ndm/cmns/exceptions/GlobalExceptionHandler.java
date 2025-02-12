@@ -47,27 +47,27 @@ public class GlobalExceptionHandler {
                 HttpStatus.METHOD_NOT_ALLOWED);
     }
     // No Resource Found 에러 처리
-    @ExceptionHandler(NoResourceFoundException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Object handleNoResourceFoundException(NoResourceFoundException ex,
-            HttpServletRequest request) throws Exception {
+//    @ExceptionHandler(NoResourceFoundException.class)
+//    @ResponseStatus(HttpStatus.BAD_REQUEST)
+//    public Object handleNoResourceFoundException(NoResourceFoundException ex,
+//            HttpServletRequest request) throws Exception {
 //        ModelAndView mView = new ModelAndView("forward:/login");
         // return mView;
 //        if(request.getRequestURL().toString().contains("/actuator") == true) {
 //            return "index";
 //        }
-        return "/error.html";
+//        return "/error.html";
 //        return createResponse("40401001", ex.getMessage(), "system error");
-    }
+//    }
 
     // 일반 Exception 처리
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiResponse<Object> handleGenericException(Exception ex) {
-        // ex.printStackTrace();
-        var message = "An unexpected error occurred: " + ex.getMessage();
-        return createResponse("40401001", message, "system error");
-    }
+//    @ExceptionHandler(Exception.class)
+//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+//    public ApiResponse<Object> handleGenericException(Exception ex) {
+//        // ex.printStackTrace();
+//        var message = "An unexpected error occurred: " + ex.getMessage();
+//        return createResponse("40401001", message, "system error");
+//    }
 
     /**
      * 응답공통

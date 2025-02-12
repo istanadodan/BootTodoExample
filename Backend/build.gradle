@@ -5,7 +5,7 @@ plugins {
     id 'war'
 }
 
-group = 'kr.or.ksd.sto'
+group = 'ksd.sto.ndm'
 version = '0.0.1-SNAPSHOT'
 
 java {
@@ -34,7 +34,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     //implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-aop'  // AOP 지원을 위한 의존성
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    //implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.aspectj:aspectjweaver'  // AspectJ 기능을 위한 의존성
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'  
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'    
@@ -61,9 +61,9 @@ dependencies {
 //bootWar {
 //    archiveFileName = "${archiveBaseName.get()}.war"
 //}
-ext {
-    prometheusVersion = '1.1.0'
-}
+//ext {
+//    prometheusVersion = '1.1.0'
+//}
 compileJava {
     options.compilerArgs << "-parameters"
 }

@@ -81,6 +81,7 @@ springdoc:
     display-request-duration: true
     default-model-expand-depth: 2
     default-models-expand-depth: 2
+    doc-expansion: None
   show-actuator: true
   show-spring-cloud-functions: true
   default-consumes-media-type: application/json
@@ -89,25 +90,30 @@ springdoc:
   model-and-view-allowed: true
   paths-to-match:
     - /**
-    
+
+monitoring:
+  apiKey: test
+  grafanaUrl: http://localhost:3000/api
+  prometheusUrl: http://localhost:9090/api/v1/query
+  
 #################
 ## Actuator
 #################
-management:
-  endpoints:
-    web:
-      base-path: /actuator      
-      exposure:
-        include: health,info,metrics,prometheus
-        #include: "*"
-  metrics:    
-    tags:
-      application: ${spring.application.name}    # 서비스 단위의 식별자. Prometheus label에 추가됨.
-#    export:
-#      prometheus:
+#management:
+#  endpoints:
+#    web:
+#      base-path: /actuator      
+#      exposure:
+#        include: health,info,metrics,prometheus
+#        #include: "*"
+#  metrics:    
+#    tags:
+#      application: ${spring.application.name}    # 서비스 단위의 식별자. Prometheus label에 추가됨.
+##    export:
+##      prometheus:
+##        enabled: true
+##            
+#  prometheus:
+#    metrics:
+#      export:
 #        enabled: true
-#            
-  prometheus:
-    metrics:
-      export:
-        enabled: true

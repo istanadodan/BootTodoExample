@@ -46,23 +46,24 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice<Object> {
             try {
                 return objectMapper.writeValueAsString(ApiResponse.builder().data(body).build());
             } catch (JsonProcessingException e) {
-                throw new RuntimeException("JSON processing failed", e);
+                return "";
             }
 
-        } else if (body instanceof LinkedHashMap) {
-            // 인증처리중 오류
-            @SuppressWarnings("unchecked")
-            LinkedHashMap<String, String> errMap = (LinkedHashMap<String, String>) body;
-            if (errMap.containsKey("_links")) { return body; }
-            
-            ApiResponse.Error error = new ApiResponse.Error();
-            error.setCode("500");
-            error.setMessage(errMap.get("message"));
-            error.setType("security");
-            return ApiResponse
-                .builder()
-                .error(error);
-        }
+        } 
+//        else if (body instanceof LinkedHashMap) {
+//            // 인증처리중 오류
+//            @SuppressWarnings("unchecked")
+//            LinkedHashMap<String, String> errMap = (LinkedHashMap<String, String>) body;
+//            if (errMap.containsKey("_links")) { return body; }
+//            
+//            ApiResponse.Error error = new ApiResponse.Error();
+//            error.setCode("500");
+//            error.setMessage(errMap.get("message"));
+//            error.setType("security");
+//            return ApiResponse
+//                .builder()
+//                .error(error);
+//        }
 
         return ApiResponse.<Object>builder().data(body).build();
     }

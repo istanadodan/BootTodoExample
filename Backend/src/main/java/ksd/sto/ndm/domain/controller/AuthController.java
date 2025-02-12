@@ -32,12 +32,12 @@ public class AuthController {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserServiceImpl userService;
 
-    @Operation(security = {@SecurityRequirement(name = "bearerAuth")})
-    @GetMapping("/error")
-    public ResponseEntity<String> exampleEndpoint() {
-        // API 로직
-        return ResponseEntity.ok("error");
-    }
+//    @Operation(security = {@SecurityRequirement(name = "bearerAuth")})
+//    @GetMapping("/error")
+//    public ResponseEntity<String> exampleEndpoint() {
+//        // API 로직
+//        return ResponseEntity.ok("error");
+//    }
 
     @GetMapping("/login")
     @Operation(summary = "로그인처리", description = "로그인처리")
