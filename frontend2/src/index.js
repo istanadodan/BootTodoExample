@@ -9,6 +9,8 @@ import {Comment, CommentList} from './components/comment';
 import NotificationList from './components/notificationList';
 import Counter from './components/count';
 import Accommodate from './customHooks/Accommodate';
+import {MyButton2, ConfirmButton, LoginControl} from './components/MyButton';
+import GrafanaDashboardUploader from './components/GrafanaDashboardUploader';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 function tick() {
@@ -35,6 +37,8 @@ setInterval(() => {
         <NotificationList />
         <Counter />
         <Accommodate />
+        <LoginControl />
+        <GrafanaDashboardUploader/>
       </React.StrictMode>
     );
 }, 1000);
