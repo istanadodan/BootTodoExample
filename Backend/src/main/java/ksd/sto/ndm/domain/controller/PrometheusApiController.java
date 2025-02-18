@@ -23,8 +23,8 @@ public class PrometheusApiController {
     private final PrometheusService prometheusService;
     
     @GetMapping("/query")
-    public String queryPrometheus(@RequestParam("endpoing") String endpoint, @RequestParam("query") String qry)  {        
-        return prometheusService.sendQuery(endpoint, qry);
+    public String queryPrometheus(@RequestParam("query") String qry)  {        
+        return prometheusService.simpleQuery(qry).toString();
     }   
 
 }

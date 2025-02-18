@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Map.Entry;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,15 +43,22 @@ public class GrafanaApiController {
     @PostMapping("/dashboards/create")
     @Operation(summary = "대시보드생성", description = "")
     public GrafanaCreateOutDTO createDashboard() {
-        Map<String, Object> dashboardJson = readJsonToMap(getResourceFilePath("files/1860_rev37.json"));
+        Map<Object, Object> dashboardJson = readJsonToMap(getResourceFilePath("files/1860_rev37.json"));
         
         @SuppressWarnings("unchecked")
-        List<Map<String, Object>> lst = (List<Map<String, Object>>) dashboardJson.get("__inputs");
-        dashboardJson.remove("__inputs");
+        List<Map<Object, Object>> replLst = (List<Map<Object, Object>>) dashboardJson.get("__inputs");
+        // 파일업로드 처리용 불요키 삭제 : __로 시작되는 hidden키
+        Iterator<Entry<Object, Object>> iterator = dashboardJson.entrySet().iterator();
+        while(iterator.hasNext()) {
+            Entry<Object, Object> next = iterator.next();
+            if(next.getKey().toString().startsWith("__") == true) {
+                iterator.remove();
+            }
+        }
         
-        for(Map<String, Object> element : lst) {
-              String target = (String) element.get("name");
-              String replace = (String) element.get("pluginId");
+        for(Map<Object, Object> element : replLst) {
+            Object target = element.get("name");
+            Object replace = element.get("pluginId");
               
               replaceValue(dashboardJson, target, replace);
         }
@@ -69,16 +78,24 @@ public class GrafanaApiController {
                 .build());
     }
 
-    private void replaceValue(Map<String, Object> map, Object target, Object replacement) {
-        for (Map.Entry<String, Object> entry : map.entrySet()) {
-            String key = entry.getKey();
+    @SuppressWarnings("unchecked")
+    private void replaceValue(Map<Object, Object> map, Object target, Object replacement) {
+        for (Map.Entry<Object, Object> entry : map.entrySet()) {
+            Object key = entry.getKey();
             Object value = entry.getValue();
+            if(Objects.isNull(value)) {
+                return;
+            }
 
             if (value instanceof Map) {
                 // 값이 Map인 경우 재귀적으로 탐색
-                @SuppressWarnings("unchecked")
-                Map<String, Object> nestedMap = (Map<String, Object>) value;
+                Map<Object, Object> nestedMap = (Map<Object, Object>) value;
                 replaceValue(nestedMap, target, replacement);
+            } if (value instanceof List) {
+                for(Map<Object, Object> subMap : (List<Map<Object, Object>>)value) {
+                    replaceValue(subMap, target, replacement);
+                }
+                
             } else if (value != null && value.equals(target)) {
                 // 값이 target과 일치하는 경우 replacement로 치환
                 map.put(key, replacement);
@@ -93,7 +110,7 @@ public class GrafanaApiController {
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
-    private Map<String, Object> readJsonToMap(String filePath) {
+    private Map<Object, Object> readJsonToMap(String filePath) {
         ObjectMapper mapper = new ObjectMapper();
         try {
             return mapper.readValue(new File(filePath), Map.class);

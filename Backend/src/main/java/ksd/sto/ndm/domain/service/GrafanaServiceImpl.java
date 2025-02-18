@@ -23,10 +23,8 @@ public class GrafanaServiceImpl implements GrafanaService {
     
     @Value("${monitoring.grafanaUrl}")
     private String grafanaUrl;
-    @Value("${monitoring.apiKey}")
-    private String apiKey;
 
-    public GrafanaServiceImpl() {
+    public GrafanaServiceImpl(@Value("${monitoring.apiKey}") String apiKey) {
         this.restTemplate = new RestTemplate();
         this.headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -56,7 +54,8 @@ public class GrafanaServiceImpl implements GrafanaService {
 //            ObjectNode nodes = jsonObj.ch
             // return result.get(0).asText();
 //            return mapper.writeValueAsString(jsonObj);
-            return jsonObj.toPrettyString();
+//            return jsonObj.toPrettyString();
+            return jsonObj.asText("");
 
         } catch (JsonProcessingException e) {
             return "";
