@@ -12,10 +12,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.SecurityContextHolderFilter;
 
-import ksd.sto.ndm.cmns.exceptions.AccessDeniedHandlerImpl;
 import ksd.sto.ndm.cmns.exceptions.AuthenticationEntryPointImpl;
-import ksd.sto.ndm.cmns.filters.LoggingFilter;
+import ksd.sto.ndm.cmns.filters.TraceIdMdcFilter;
 import ksd.sto.ndm.cmns.security.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 
@@ -28,6 +28,7 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 //    private final LoggingFilter loggingFilter;
     private final AuthenticationEntryPointImpl authenticationEntryPointImpl;
+    private final TraceIdMdcFilter traceIdMdcFilter;
 
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -46,6 +47,7 @@ public class SecurityConfig {
             // .usernameParameter("userId")
             // .passwordParameter("password")
             )
+            .addFilterBefore(traceIdMdcFilter, SecurityContextHolderFilter.class)
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 //            .addFilterAfter(loggingFilter, UsernamePasswordAuthenticationFilter.class)
             .exceptionHandling(ex -> {

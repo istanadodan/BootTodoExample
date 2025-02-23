@@ -1,14 +1,14 @@
 package ksd.sto.ndm.cmns.filters;
 
 import java.io.IOException;
-import java.util.Date;
+import java.time.Instant;
+import java.util.Objects;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import io.swagger.v3.oas.models.PathItem.HttpMethod;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -31,8 +31,8 @@ public class LoggingFilter extends OncePerRequestFilter {
         String userId = (context == null)
                 ? "Not_Login"
                 : ((UserDetails) context.getPrincipal()).getUsername();
-        @SuppressWarnings("deprecation")
-        String now = new Date().toGMTString();
+        
+        String now = Instant.now().toString(); //UTC 시간
         String requestBody = null;
 
         log

@@ -1,9 +1,10 @@
-package ksd.sto.ndm.configs;
+package ksd.sto.ndm.cmns.filters;
 
 import java.io.IOException;
 import java.util.UUID;
 
 import org.slf4j.MDC;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import jakarta.servlet.Filter;
@@ -20,7 +21,7 @@ import jakarta.servlet.http.HttpServletRequest;
  * [123e4567-e89b-12d3-a456-426614174000] INFO  TestController - 테스트 요청이 들어왔습니다.
  */
 @Component
-public class MdcFilter implements Filter {
+public class TraceIdMdcFilter implements Filter {
 
     private static final String TRACE_ID = "traceId";
 
