@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.UUID;
 
 import org.slf4j.MDC;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import jakarta.servlet.Filter;
@@ -13,6 +12,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 /*
  * MDC.put()을 활용하여 요청별 traceId를 로깅에 포함
  * 요청이 끝난 후 MDC.clear()로 정리
@@ -20,6 +20,7 @@ import jakarta.servlet.http.HttpServletRequest;
  * 
  * [123e4567-e89b-12d3-a456-426614174000] INFO  TestController - 테스트 요청이 들어왔습니다.
  */
+@Slf4j
 @Component
 public class TraceIdMdcFilter implements Filter {
 
@@ -33,8 +34,7 @@ public class TraceIdMdcFilter implements Filter {
             MDC.put(TRACE_ID, traceId);
 
             HttpServletRequest httpRequest = (HttpServletRequest) request;
-            System.out
-                .println("Request: " + httpRequest.getRequestURI() + ", Trace ID: " + traceId);
+            log.info("Request: " + httpRequest.getRequestURI() + ", Trace ID: " + traceId);
 
             chain.doFilter(httpRequest, response);
         } finally {

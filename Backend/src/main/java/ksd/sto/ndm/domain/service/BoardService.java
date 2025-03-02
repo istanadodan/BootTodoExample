@@ -6,4 +6,5 @@ import ksd.sto.ndm.domain.dto.BoardDTO;
 
 public interface BoardService {
     public List<BoardDTO> getAllBoardList();
+    public String testAop(Object test);
 }

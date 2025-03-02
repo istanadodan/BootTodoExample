@@ -38,6 +38,8 @@ public class BoardController {
         output.add("data2");
         output.add("data3");
         output.add("data4");
+        
+        boardService.testAop(output);
         return output;
     }
 

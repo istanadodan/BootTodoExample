@@ -17,5 +17,11 @@ public class BoardServiceImpl implements BoardService {
 	public List<BoardDTO> getAllBoardList() {
 	    log.info("BoardService.getAllBoardList()");
 		return  boardDao.getAllBoardList();
-	}	
+	}
+
+    @Override
+    public String testAop(Object test) {
+        // TODO Auto-generated method stub
+        return null;
+    }	
 }

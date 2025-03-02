@@ -1,8 +1,5 @@
 package ksd.sto.ndm.cmns;
 
-import java.util.LinkedHashMap;
-import java.util.TreeMap;
-
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -32,7 +29,7 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice<Object> {
             Class<? extends HttpMessageConverter<?>> selectedConverterType,
             ServerHttpRequest request, ServerHttpResponse response) {
         // 응답 수정 로직
-        log.info("request: {}", body.getClass().toString());
+        log.info("Request: {}", body.getClass().toString());
 
         if (body instanceof ApiResponse || request.getURI().getPath().contains("/v3/api-docs")
                 || request.getURI().getPath().contains("/actuator")) {
@@ -40,7 +37,7 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice<Object> {
             return body;
 
         } else if (body instanceof String) {
-            log.info("String request: {}", body.toString());
+            log.info("String Request: {}", body.toString());
             // ObjectMapper를 사용하여 직접 JSON 문자열로 변환
             ObjectMapper objectMapper = new ObjectMapper();
             try {
