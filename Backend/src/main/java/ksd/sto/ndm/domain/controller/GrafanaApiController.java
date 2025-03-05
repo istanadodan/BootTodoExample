@@ -7,8 +7,8 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Map.Entry;
+import java.util.Objects;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +22,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import ksd.sto.ndm.domain.dto.GrafanaCreateInDTO;
 import ksd.sto.ndm.domain.dto.GrafanaCreateOutDTO;
 import ksd.sto.ndm.domain.service.GrafanaService;
+import ksd.sto.ndm.domain.utils.BizUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,6 +39,23 @@ public class GrafanaApiController {
             @RequestParam("query") String qry) {
         // String url = "?query=" + qry;
         return grafanaService.sendQuery(endpoint, qry);
+    }
+    
+    @GetMapping("/jwt")
+    public String getJwt(@RequestParam("args") String args) {
+        String privateKeyPath = "src/main/resources/files/id_rsa";
+        String issuer = "java-account";
+        String subject = "test@ksd.com";
+        int expirationMinutes = 5;
+        String jwt = null;
+        try {
+            jwt = BizUtils.generateJwt(privateKeyPath, issuer, subject, expirationMinutes);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        System.out.println("Generated JWT: " + jwt);
+        return jwt;
     }
 
     @PostMapping("/dashboards/create")

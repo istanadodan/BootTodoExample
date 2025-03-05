@@ -24,12 +24,10 @@ public class PrometheusServiceImpl implements PrometheusService {
     @Value("${monitoring.apiKey}")
     private String apiKey;
 
-    private final RestTemplate restTemplate;
     private final HttpHeaders headers;    
     private OkHttpClient httpClient;
 
     public PrometheusServiceImpl() {
-        restTemplate = new RestTemplate();
         headers = new HttpHeaders();
         httpClient = new OkHttpClient();
         headers.setContentType(MediaType.APPLICATION_JSON);

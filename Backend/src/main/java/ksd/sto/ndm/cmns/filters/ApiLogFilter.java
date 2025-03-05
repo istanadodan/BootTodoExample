@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 
 //@Component
 @Slf4j
-public class LoggingFilter extends OncePerRequestFilter {
+public class ApiLogFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
