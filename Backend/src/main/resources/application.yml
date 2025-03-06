@@ -16,7 +16,20 @@ spring:
       - classpath:/public/
       cache:
         period: 3600
-  mvc.async.request-timeout: 60000
+  mvc:
+    async:
+      request-timeout: 60000
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dodan.kwon@gmail.com
+    password: 950140
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: true
     
 #  jpa:
 #    hibernate:
@@ -92,10 +105,10 @@ springdoc:
     - /**
 
 monitoring:
-  apiKey: test
+  apiKey: --
   grafanaUrl: http://localhost:3000/api
-  prometheusUrl: http://localhost:9090/api/v1/query
-  
+  prometheusUrl: http://127.0.0.1:59765
+
 #################
 ## Actuator
 #################
