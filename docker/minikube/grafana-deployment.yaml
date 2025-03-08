@@ -23,7 +23,7 @@ spec:
           containerPort: 3000
         volumeMounts:
         - name: app-volume
-          mountPath: /var/lib/grafana
+          mountPath: /etc/grafana
         # command: ['sh', '-c', 'nginx -g "daemon off;"']
         securityContext:
           runAsUser: 0
