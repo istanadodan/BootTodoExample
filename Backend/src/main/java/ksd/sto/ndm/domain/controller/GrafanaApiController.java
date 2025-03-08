@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.v3.oas.annotations.Operation;
+import ksd.sto.ndm.cmns.security.JwtTokenProvider;
 import ksd.sto.ndm.domain.dto.GrafanaCreateInDTO;
 import ksd.sto.ndm.domain.dto.GrafanaCreateOutDTO;
 import ksd.sto.ndm.domain.service.GrafanaService;
-import ksd.sto.ndm.domain.utils.BizUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -33,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
 public class GrafanaApiController {
 
     private final GrafanaService grafanaService;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/grafana")
     public String queryGrafana(@RequestParam("endpoing") String endpoint,
@@ -40,16 +41,18 @@ public class GrafanaApiController {
         // String url = "?query=" + qry;
         return grafanaService.sendQuery(endpoint, qry);
     }
-    
+
     @GetMapping("/jwt")
     public String getJwt(@RequestParam("args") String args) {
-        String privateKeyPath = "src/main/resources/files/grafana.key";
+//        String privateKeyPath = "src/main/resources/files/grafana.key";
+        String privateKeyPath = "files/grafana.key";
         String user = "java-account";
         String email = "c4now@naver.com";
-        int expirationMinutes = 24*60;
+        int expirationMinutes = 24 * 60 * 365;
         String jwt = null;
         try {
-            jwt = BizUtils.generateJwt(privateKeyPath, user, email, expirationMinutes);
+            jwt = jwtTokenProvider
+                .generateGrafanaToken(privateKeyPath, user, email, expirationMinutes);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -61,26 +64,26 @@ public class GrafanaApiController {
     @PostMapping("/dashboards/create")
     @Operation(summary = "대시보드생성", description = "")
     public GrafanaCreateOutDTO createDashboard() {
-        Map<Object, Object> dashboardJson = readJsonToMap(getResourceFilePath("files/1860_rev37.json"));
-        
+        Map<Object, Object> dashboardJson = readJsonToMap(
+                getResourceFilePath("files/1860_rev37.json"));
+
         @SuppressWarnings("unchecked")
-        List<Map<Object, Object>> replLst = (List<Map<Object, Object>>) dashboardJson.get("__inputs");
+        List<Map<Object, Object>> replLst = (List<Map<Object, Object>>) dashboardJson
+            .get("__inputs");
         // 파일업로드 처리용 불요키 삭제 : __로 시작되는 hidden키
         Iterator<Entry<Object, Object>> iterator = dashboardJson.entrySet().iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             Entry<Object, Object> next = iterator.next();
-            if(next.getKey().toString().startsWith("__") == true) {
-                iterator.remove();
-            }
+            if (next.getKey().toString().startsWith("__") == true) { iterator.remove(); }
         }
-        
-        for(Map<Object, Object> element : replLst) {
+
+        for (Map<Object, Object> element : replLst) {
             Object target = element.get("name");
             Object replace = element.get("pluginId");
-              
-              replaceValue(dashboardJson, target, replace);
+
+            replaceValue(dashboardJson, target, replace);
         }
-        
+
         // pass
         return grafanaService
             .createDashboard(GrafanaCreateInDTO
@@ -101,19 +104,18 @@ public class GrafanaApiController {
         for (Map.Entry<Object, Object> entry : map.entrySet()) {
             Object key = entry.getKey();
             Object value = entry.getValue();
-            if(Objects.isNull(value)) {
-                return;
-            }
+            if (Objects.isNull(value)) { return; }
 
             if (value instanceof Map) {
                 // 값이 Map인 경우 재귀적으로 탐색
                 Map<Object, Object> nestedMap = (Map<Object, Object>) value;
                 replaceValue(nestedMap, target, replacement);
-            } if (value instanceof List) {
-                for(Map<Object, Object> subMap : (List<Map<Object, Object>>)value) {
+            }
+            if (value instanceof List) {
+                for (Map<Object, Object> subMap : (List<Map<Object, Object>>) value) {
                     replaceValue(subMap, target, replacement);
                 }
-                
+
             } else if (value != null && value.equals(target)) {
                 // 값이 target과 일치하는 경우 replacement로 치환
                 map.put(key, replacement);

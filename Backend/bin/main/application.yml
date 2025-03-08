@@ -23,11 +23,11 @@ spring:
     host: smtp.gmail.com
     port: 587
     username: dodan.kwon@gmail.com
-    password: 950140
+    password: "phvv pcwz vhem lqsq"
     properties:
       mail:
         smtp:
-          auth: false
+          auth: true
           starttls:
             enable: true
     
