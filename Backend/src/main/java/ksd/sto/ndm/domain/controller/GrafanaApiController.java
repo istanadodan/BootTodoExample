@@ -43,13 +43,13 @@ public class GrafanaApiController {
     
     @GetMapping("/jwt")
     public String getJwt(@RequestParam("args") String args) {
-        String privateKeyPath = "src/main/resources/files/id_rsa";
-        String issuer = "java-account";
-        String subject = "test@ksd.com";
-        int expirationMinutes = 5;
+        String privateKeyPath = "src/main/resources/files/grafana.key";
+        String user = "java-account";
+        String email = "c4now@naver.com";
+        int expirationMinutes = 24*60;
         String jwt = null;
         try {
-            jwt = BizUtils.generateJwt(privateKeyPath, issuer, subject, expirationMinutes);
+            jwt = BizUtils.generateJwt(privateKeyPath, user, email, expirationMinutes);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
