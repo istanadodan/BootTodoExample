@@ -1,5 +1,7 @@
 package ksd.sto.ndm.domain.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
@@ -31,15 +33,20 @@ public class AsyncService {
     public CompletableFuture<String> processTask(MailSendAddrDTO task) throws InterruptedException {
 
         MailSendAddrDTO dto = task;
-//        String result = service.sendEmail(dto.getEmail(), dto.getTitle(), dto.getContent());
+        // String result = service.sendEmail(dto.getEmail(), dto.getTitle(),
+        // dto.getContent());
 
-        return CompletableFuture.completedFuture(service.sendEmail(dto.getEmail(), dto.getTitle(), dto.getContent()));
+        return CompletableFuture
+            .completedFuture(service.sendEmail(dto.getEmail(), dto.getTitle(), dto.getContent()));
     }
-    
+
     @Async
-    public CompletableFuture<String> processTask2(String task) throws InterruptedException {
+    public CompletableFuture<Object> processTask2(String task) throws InterruptedException {
 
+        Thread.sleep(1000); // 2초 대기 (예: 오래 걸리는 작업)
+        List<String> lst = new ArrayList<>();
+        lst.add(task);
+        return CompletableFuture.completedFuture(lst);
 
-        return CompletableFuture.completedFuture(task);
     }
 }

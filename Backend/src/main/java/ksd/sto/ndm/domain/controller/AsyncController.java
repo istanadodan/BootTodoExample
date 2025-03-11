@@ -41,7 +41,7 @@ public class AsyncController {
         List<String> tasks = Arrays.asList("Task1", "Task2", "Task3", "Task4");
 
         // CompletableFuture를 사용하여 병렬 처리
-        List<CompletableFuture<String>> futures = tasks.stream()
+        List<CompletableFuture<Object>> futures = tasks.stream()
                 .map(task -> {
                     try {
                         return asyncService.processTask2(task);

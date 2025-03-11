@@ -2,6 +2,7 @@
 **/.settings/
 **/build/
 **/node_modules/
+**/bin/
 /.metadata/
 /.vscode/
 Frontendkk

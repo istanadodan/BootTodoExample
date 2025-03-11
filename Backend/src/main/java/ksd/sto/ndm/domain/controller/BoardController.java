@@ -3,14 +3,10 @@ package ksd.sto.ndm.domain.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import ksd.sto.ndm.cmns.security.JwtTokenProvider;
 import ksd.sto.ndm.domain.dto.BoardDTO;
 import ksd.sto.ndm.domain.service.BoardService;
 import lombok.RequiredArgsConstructor;
