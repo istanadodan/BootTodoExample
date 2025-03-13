@@ -11,13 +11,16 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender mailSender;
-
+    
     public String sendEmail(String to, String subject, String text) {
+
         SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("c4now@naver.com");
         message.setTo(to);
         message.setSubject(subject);
         message.setText(text);
         mailSender.send(message);
         return "%s complete".formatted(subject);
+        
     }
 }

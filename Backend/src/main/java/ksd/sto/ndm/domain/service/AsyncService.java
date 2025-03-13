@@ -30,14 +30,9 @@ public class AsyncService {
     }
 
     @Async
-    public CompletableFuture<String> processTask(MailSendAddrDTO task) throws InterruptedException {
-
-        MailSendAddrDTO dto = task;
-        // String result = service.sendEmail(dto.getEmail(), dto.getTitle(),
-        // dto.getContent());
-
+    public CompletableFuture<String> processTask(MailSendAddrDTO task) {
         return CompletableFuture
-            .completedFuture(service.sendEmail(dto.getEmail(), dto.getTitle(), dto.getContent()));
+            .completedFuture(service.sendEmail(task.getEmail(), task.getTitle(), task.getContent()));
     }
 
     @Async
